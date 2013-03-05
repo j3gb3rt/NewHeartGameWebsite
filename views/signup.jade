@@ -1,0 +1,27 @@
+extends layout
+
+block title
+	title Sign Up Page
+
+block content
+	h1 Sign Up
+	table#signup.box
+		tr
+			th Your Avatar
+			th Information
+		tr
+			td
+				div
+					img(src="assets/images/avatar.png")
+			td
+				form(action="map", method="post", name="login")
+					fieldset#inputs
+						input#email(type="email",placeholder="E-mail address", autofocus, required)
+						input#email_verify(type="email", placeholder="E-mail address again", required)
+						input#hero_name(type="hero_name",placeholder="Hero name", required)
+						input#password(type="password", placeholder="Password", required)
+						input#password_verify(type="password", placeholder="Password again", required)
+					fieldset#actions
+						input#submit(type="submit", value="Log in")
+						br
+						a(href="login") Already have an account?

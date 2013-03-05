@@ -1,5 +1,5 @@
 html {
-    background:url('Images/newheart_hires_logo.png') no-repeat center center fixed;
+    background:url('/assets/images/newheart_hires_logo.png') no-repeat center center fixed;
     -webkit-background-size:cover;
     -moz-background-size:cover;
     -o-background-size:cover;
@@ -93,7 +93,7 @@ label.stat.attribute {
 
 /*MAP*/
 #map {
-    background: url('Images/Map/background.png') no-repeat center center;
+    background: url('/assets/images/map/background.png') no-repeat center center;
     background-size: 80%;
     position: absolute;
     width: 50%;
@@ -149,7 +149,7 @@ label.stat.attribute {
 
 #navigation {
     position: relative;
-    background: url('Images/NavBar/background.png') no-repeat center center;
+    background: url('/assets/images/navbar/background.png') no-repeat center center;
     background-size: 100% auto;
     text-align: center;
     padding: 0px;

@@ -1,0 +1,17 @@
+extends layout
+
+block title 
+	title Login Page
+	
+block content
+	form.box(action="map", method="post", name="login", id="login")
+		img(src="assets/images/newme_logo.png")
+		fieldset#inputs
+			input#email(type="email", placeholder="E-mail address", autofocus, required)
+			input#password(type="password", placeholder="Password", required)
+		fieldset#actions
+			input#submit(type="submit",value="Log in")
+			p
+				a(href="signup") Sign Up
+				br
+				a(href="password_recovery") Forgot your password?

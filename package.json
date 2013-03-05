@@ -1,0 +1,38 @@
+{
+  "name": "new-heart",
+  "preferGlobal": false,
+  "version": "0.0.3",
+  "author": "N/A",
+  "description": "N/A",
+  "contributors": [ 
+  ],
+  "bin": {
+  },
+  "scripts": {
+    "start" : "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+  ],
+  "dependencies" : {
+    "mysql"  :   "",
+    "express"   :   "3.x",
+    "jade"      :    ""
+  },
+  "analyze": false,
+  "devDependencies": {
+    "mocha"     :   ">=1.8",
+    "zombie"    :   "",
+    "sinon"     :   ""
+  },
+  "bundledDependencies": [
+  ],  
+  "license": "N/A",
+  "engines": {
+    "node": ">=0.6"
+  }
+}
+
