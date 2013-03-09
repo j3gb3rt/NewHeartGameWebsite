@@ -11,3 +11,9 @@ describe('config', function(){
 		assert.ok(configuration.db_database);
 	});
 });
+
+describe('session_tokens', function(){
+	it('should generate non-unique session_tokens', function () {
+		assert.ok(db_handler.generate_session_token() != db_handler.generate_session_token());
+	})
+});

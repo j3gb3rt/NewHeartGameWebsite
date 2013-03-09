@@ -3,15 +3,6 @@ var app = express();
 var db_handler = require('./database.js');
 var configuration = require('./config/configuration.js');
 
-//Database Examples
-db_handler.query('select * from users where id = ?', [1], function(err, res){
-	console.log(res);
-});
-
-db_handler.query('select * from users', function(err, res){
-	console.log(res);
-});
-
 app.set('views', __dirname + '/views');
 app.use('/assets', express.static(__dirname + '/assets'));
 
