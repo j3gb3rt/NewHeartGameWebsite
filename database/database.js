@@ -1,8 +1,7 @@
 var fs = require('fs');
-var crypto = require('crypto');
 var mysql = require("mysql");
-var configuration = require("./config/configuration.js");
-
+var pcrypto = require('./password_encryption.js');
+var configuration = require("../config/configuration.js");
 
 var pool = mysql.createPool({
 	"hostname": configuration.db_host,
@@ -35,18 +34,26 @@ function query(query, params, callback){
 	});
 }
 
-function generate_session_token(){
-	return crypto.randomBytes(24).toString('base64');
+function create_user(username, email, password, callback){
+	var user_salt = pcrypto.generate_user_salt();
+	var password_hash = pcrypto.encrypt_password(password, user_salt);
+	query('insert into users (username, email, password_hash, password_salt, session_token) values (?, ?, ?, ?, ?)', 
+			[username, email, password_hash, user_salt, pcrypto.generate_session_token()], callback);
 }
 
-function create_user(username, email, password, callback){
-	var user_salt = crypto.randomBytes(12).toString('base64');
-	var password_hash = crypto.createHash('sha256').update(password + user_salt + configuration.db_salt).digest('base64');
-	query('insert into users (username, email, password_hash, password_salt, session_token) values (?, ?, ?, ?, ?)', 
-			[username, email, password_hash, user_salt, generate_session_token()], callback);
+function login_verification(username, password, callback){
+	query('select * from users where username = ?', [username], function(err, rows){
+		if(err){
+			callback(err, null);
+		} else if(rows.length == 0 || !pcrypto.verify_password(password, rows[0].password_salt, rows[0].password_hash)){
+			callback("username/password doesn't match", null);
+		} else{
+			callback(err, rows);
+		}
+	});
 }
 
 module.exports.query = query
 module.exports.create_user = create_user
-module.exports.generate_session_token = generate_session_token
+
 

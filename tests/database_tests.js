@@ -1,6 +1,6 @@
 var assert = require('assert');
 var sinon = require('sinon');
-var db_handler = require('../database.js');
+var db_handler = require('../database/database.js');
 var configuration = require('../config/configuration.js');
 
 describe('config', function(){
@@ -9,11 +9,6 @@ describe('config', function(){
 		assert.ok(configuration.db_user);
 		assert.ok(configuration.db_password);
 		assert.ok(configuration.db_database);
+		assert.ok(configuration.db_salt.length > 0);
 	});
-});
-
-describe('session_tokens', function(){
-	it('should generate non-unique session_tokens', function () {
-		assert.ok(db_handler.generate_session_token() != db_handler.generate_session_token());
-	})
 });

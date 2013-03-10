@@ -1,7 +1,24 @@
 var express = require('express');
 var app = express();
-var db_handler = require('./database.js');
+var db_handler = require('./database/database.js');
 var configuration = require('./config/configuration.js');
+
+/*db_handler.create_user('bob', 'asdf@sdf.com', 'apples', function(err, res){
+	if(err){
+		console.log(err);
+	} else {
+		console.log(res);
+	}
+});*/
+
+db_handler.query('select * from users', function(err, res){
+	if(err){
+		console.log(err);
+	} else {
+
+		console.log(res);	
+	}
+});
 
 app.set('views', __dirname + '/views');
 app.use('/assets', express.static(__dirname + '/assets'));
