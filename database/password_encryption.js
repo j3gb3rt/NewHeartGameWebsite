@@ -2,7 +2,7 @@ var crypto = require('crypto');
 var configuration = require("../config/configuration.js");
 
 function generate_session_token(){
-	return crypto.randomBytes(24).toString('base64');
+	return crypto.randomBytes(16).toString('hex');
 }
 
 function generate_user_salt(){

@@ -41,19 +41,31 @@ function create_user(username, email, password, callback){
 			[username, email, password_hash, user_salt, pcrypto.generate_session_token()], callback);
 }
 
-function login_verification(username, password, callback){
-	query('select * from users where username = ?', [username], function(err, rows){
+function verify_login(identity, password, callback){
+	query('select * from users where username = ? or email = ?', [identity, identity], function(err, rows){
 		if(err){
 			callback(err, null);
 		} else if(rows.length == 0 || !pcrypto.verify_password(password, rows[0].password_salt, rows[0].password_hash)){
 			callback("username/password doesn't match", null);
 		} else{
-			callback(err, rows);
+			callback(err, rows[0]);
 		}
 	});
 }
 
+function retrieve_user(identity, session_token, callback){
+	query('select * from users where (email = ? or username = ?) and session_token = ?', [identity, identity, session_token], function(err, rows){
+		if(err){
+			callback(err, null);
+		} else if(rows.length == 0){
+			callback("no such user", null);
+		} else{
+			callback(err, rows[0]);
+		}
+	});	
+}
+
 module.exports.query = query
 module.exports.create_user = create_user
-
-
+module.exports.verify_login = verify_login
+module.exports.retrieve_user = retrieve_user

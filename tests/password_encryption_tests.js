@@ -5,6 +5,9 @@ describe('#generate_session_token', function(){
 	it('should generate non-unique session_tokens', function () {
 		assert.ok(pcrypto.generate_session_token() != pcrypto.generate_session_token());
 	});
+	it('should generate a token of length 32', function () {
+		assert.ok(pcrypto.generate_session_token() != pcrypto.generate_session_token());
+	});
 });
 
 describe('#generate_user_salt', function(){

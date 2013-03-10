@@ -14,14 +14,14 @@ block content
 				div
 					img(src="assets/images/avatar.png")
 			td
-				form(action="map", method="post", name="login")
+				form(action="signup", method="post")
 					fieldset#inputs
-						input#email(type="email",placeholder="E-mail address", autofocus, required)
+						input#email(type="email", placeholder="E-mail address", name="email", autofocus, required)
 						input#email_verify(type="email", placeholder="E-mail address again", required)
-						input#hero_name(type="hero_name",placeholder="Hero name", required)
-						input#password(type="password", placeholder="Password", required)
+						input#hero_name(type="text", placeholder="Hero name", name="username", required)
+						input#password(type="password", placeholder="Password", name="password", required)
 						input#password_verify(type="password", placeholder="Password again", required)
 					fieldset#actions
-						input#submit(type="submit", value="Log in")
+						input#submit(type="submit", value="Sign Up")
 						br
 						a(href="login") Already have an account?
