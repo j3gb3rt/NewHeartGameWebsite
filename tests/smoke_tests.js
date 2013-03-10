@@ -18,4 +18,9 @@ describe('Loads pages', function(){
             assert.equal(browser.text("title"), 'Sign Up Page');
         });
     });
+    it('profile page', function(){
+        browser.visit("http://localhost:3000/profile", function () {
+            assert.equal(browser.text("title"), 'Login Page');
+        });
+    });
 });

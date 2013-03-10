@@ -5,14 +5,19 @@ describe('#generate_session_token', function(){
 	it('should generate non-unique session_tokens', function () {
 		assert.ok(pcrypto.generate_session_token() != pcrypto.generate_session_token());
 	});
+
 	it('should generate a token of length 32', function () {
-		assert.ok(pcrypto.generate_session_token() != pcrypto.generate_session_token());
+		assert.ok(pcrypto.generate_session_token().length == 32);
 	});
 });
 
 describe('#generate_user_salt', function(){
 	it('should generate non-unique salts', function () {
 		assert.ok(pcrypto.generate_user_salt() != pcrypto.generate_user_salt());
+	});
+
+	it('should generate a token of length 16', function () {
+		assert.ok(pcrypto.generate_user_salt().length == 16);
 	});
 });
 

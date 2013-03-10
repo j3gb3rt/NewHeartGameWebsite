@@ -1,0 +1,55 @@
+extends layout
+
+block title
+	title Profile Page
+
+block content
+	h1 Profile
+	#stats.box
+		table
+			tr
+				th
+					#username
+						=username
+				th Stats and Loadout
+				th Friend Feed
+			tr
+				td
+					div
+						img(src="assets/images/avatar.png")
+				td
+					label.stat Charisma:
+					label#charismaNum.stat.attribute
+						=charisma
+					br
+					meter#charisma(value=charisma, max=20)
+					br
+					label.stat Constitution:
+					label#constitutionNum.stat.attribute
+						=constitution
+					br
+					meter#constitution(value=constitution, max=20)
+					br
+					label.stat Dedication:
+					label#dedicationNum.stat.attribute
+						=dedication
+					br
+					meter#dedication(value=dedication, max=20)
+					br
+					label.stat Fitness:
+					label#fitnessNum.stat.attribute
+						=fitness
+					br
+					meter#fitness(value=fitness, max=20)
+					.entry Lorem ipsum
+					.entry Etiam viverra tempus ligula, varius posuere metus ornare vel.
+					.entry Lorem ipsum
+					.entry Lorem ipsum
+					.entry Lorem ipsum
+				td
+					.entry Lorem ipsum
+					.entry Lorem ipsum
+					.entry Lorem ipsum
+					.entry Lorem ipsum
+					.entry Lorem ipsum
+					.entry Lorem ipsum

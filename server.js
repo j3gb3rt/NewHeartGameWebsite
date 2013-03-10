@@ -24,6 +24,16 @@ app.get('/login', function(req, res){
 	});
 });
 
+app.get('/profile', function(req, res){
+	db_handler.retrieve_user(req.cookies.email, req.cookies.session_token, function(err, result){
+		if(err){
+			res.redirect('/login');
+		} else {
+			res.render('profile.jade', result);
+		}
+	});
+});
+
 function set_user_session(res, email, session_token){
 	res.cookie('session_token', session_token, { maxAge: 3600000*24*365});
 	res.cookie('email', email, { maxAge: 3600000*24*365});
