@@ -23,4 +23,9 @@ describe('Loads pages', function(){
             assert.equal(browser.text("title"), 'Login Page');
         });
     });
+    it('404 page', function(){
+        browser.visit("http://localhost:3000/404", function () {
+            assert.equal(browser.text("title"), 'Page Under Construction');
+        });
+    });
 });

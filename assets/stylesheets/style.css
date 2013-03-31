@@ -28,6 +28,18 @@ input[type=range]:after { content: attr(max); padding-left: 5px;}
     border-color: rgba(150,150,150, 0.5);
 }
 
+#error {
+    width: 250px;
+    height: 200px;
+    padding: 20px;
+    position: absolute;
+    margin-left: -135px;
+    margin-top: -150px;
+    left: 50%;
+    top: 35%;
+    z-index: 0;
+}
+
 /*LOGIN*/
 #login {
     width: 250px;
