@@ -1,5 +1,5 @@
 var crypto = require('crypto');
-var configuration = require("../config/configuration.js");
+var configuration = require("../config");
 
 function generate_session_token(){
 	return crypto.randomBytes(16).toString('hex');

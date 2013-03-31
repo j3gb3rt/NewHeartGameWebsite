@@ -10,9 +10,17 @@ html(lang='en')
 		#navigation_container
 			table#navigation
 				tr
-					td
-						a(href="login")
-							img(src="assets/images/navbar/signin.png")
+					if(typeof username != 'undefined')
+						td
+							a(href="logout")
+								img(src="assets/images/navbar/logout.png")
+						td
+							a(href="profile")
+								img(src="assets/images/navbar/profile.png")
+					else
+						td
+							a(href="login")
+								img(src="assets/images/navbar/signin.png")
 					td
 						a(href="map")
 							img(src="assets/images/navbar/home.png")

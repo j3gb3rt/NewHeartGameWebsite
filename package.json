@@ -19,7 +19,7 @@
   "keywords": [
   ],
   "dependencies" : {
-    "mysql"  :   "",
+    "mysql"     :   "latest",
     "express"   :   "3.x",
     "jade"      :    ""
   },

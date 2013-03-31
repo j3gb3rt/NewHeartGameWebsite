@@ -1,7 +1,7 @@
 var assert = require('assert');
 var sinon = require('sinon');
-var db_handler = require('../database/database.js');
-var configuration = require('../config/configuration.js');
+var db_handler = require('../database');
+var configuration = require('../config');
 
 describe('config', function(){
 	it('should respond to the database parameters', function(){

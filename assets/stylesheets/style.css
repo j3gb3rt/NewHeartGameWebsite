@@ -70,13 +70,11 @@ input[type=range]:after { content: attr(max); padding-left: 5px;}
     padding: 25px;
 }
 
-
 /*STATS / GAME INFO*/
 #stats {
     position: relative;
     display: block;
     padding: 25px;
-    margin-top: 10%;
     margin-left: auto;
     margin-right: auto;
     min-width: 600px;
