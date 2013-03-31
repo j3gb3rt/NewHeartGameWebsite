@@ -12,7 +12,9 @@ var pool = mysql.createPool({
 
 function query(query, params, callback){
 	pool.getConnection(function(err, connection) {
-		if(callback){
+		if(err){
+			console.log(err);
+		} else if(callback){
 			connection.query(query, params, function(err, rows) {
 				if(err){
 					console.log(err);	
