@@ -1,0 +1,23 @@
+doctype
+html(lang='en')
+	head
+		title Avatar Creation
+		link(rel="stylesheet", type="text/css", href="assets/stylesheets/style.css")
+	body
+		.avatar_title
+			h1 Create Your Avatar
+		div(style="margin:auto;padding-top:3%;")
+			div(style="width:35%;padding-left:15%;float:left")
+				| Hair Color:
+				ul#hair_color
+					li(style="display:inline") 
+						img(src="assets/avatar/left_arrow.png")
+					div(style="display:inline")
+						li(style="display:inline") ds
+						li(style="display:inline") ds
+					li(style="display:inline")
+						img(src="assets/avatar/right_arrow.png")
+			div(style="width:35%;padding-right:15%;float:right;text-align:center")
+				.avatar_name
+					| Hello! My Name is #{username}
+				canvas(width=300,height=400,style="background-color:black")

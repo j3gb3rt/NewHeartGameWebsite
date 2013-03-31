@@ -27,8 +27,8 @@ user.retrieve_user = function (identity, session_token, callback){
 		if(err){
 			callback(err, null);
 		} else if(rows.length == 0){
-			callback("no such user", null);
-		} else{
+			callback({"error" : "no such user"}, null);
+		} else {
 			callback(err, rows[0]);
 		}
 	});	
@@ -44,6 +44,16 @@ user.delete_user_session = function(req, res, callback){
 	res.cookie('session_token', "", { maxAge: 0});
 	res.cookie('email', "", { maxAge: 0});
 	if(callback) callback(req, res);
+};
+
+user.has_avatar = function (identity, callback){
+	db.query('select * from users, avatars where (users.email = ? or users.username = ?) and avatars.email = users.email', [identity, identity], function(err, rows){
+		if(err){
+			callback(err, null);
+		} else {
+			callback(err, rows.length != 0);
+		}
+	});	
 };
 
 module.exports.user = user;

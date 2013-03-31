@@ -72,6 +72,17 @@ function route(app, db_handler, next){
 		});
 	});
 
+	app.get('/avatar', user_page(db_handler, function (req, res, result){
+		db_handler.user.has_avatar(result.username, function (err, has_avatar){
+			if(err || has_avatar){
+				res.redirect('/map');
+			} else {
+				res.render('avatar', result);
+			}
+		});
+	},redirect_page('/login')));
+
+
 	app.use(function(req, res, next){
 		res.status(404);
 		if (req.accepts('html')) {
