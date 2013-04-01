@@ -21,7 +21,8 @@
   "dependencies" : {
     "mysql"     :   "latest",
     "express"   :   "3.x",
-    "jade"      :    ""
+    "jade"      :    "latest",
+    "gm"        :    "latest"
   },
   "analyze": false,
   "devDependencies": {

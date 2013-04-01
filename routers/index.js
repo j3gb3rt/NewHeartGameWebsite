@@ -1,4 +1,5 @@
 var configuration = require('../config');
+var gm = require('gm');
 
 function route(app, db_handler, next){
 
@@ -53,7 +54,7 @@ function route(app, db_handler, next){
 			}
 		})}, 
 	redirect_page('/login')));
-	
+
 	app.get('/login', user_page(db_handler, redirect_page('/map'), simple_page('login')));
 	app.post('/login', function(req, res){
 		db_handler.user.verify_login(req.body.email, req.body.password, function(err, result){
@@ -93,6 +94,14 @@ function route(app, db_handler, next){
 		});
 	},redirect_page('/login')));
 
+	app.get('/avatars/:params(*+)', function(req, res){
+		res.setHeader('Content-Type', "image/png");
+		gm(app.get('dir') + '/assets/images/avatar/hair_1.png')
+		.stream(function (err, stdout, stderr) {
+			if (err) next(err);
+      		stdout.pipe(res);
+    	});
+	});
 
 	app.use(function(req, res, next){
 		res.status(404);

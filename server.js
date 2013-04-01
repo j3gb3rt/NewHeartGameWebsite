@@ -6,7 +6,7 @@ var routers = require('./routers');
 
 app.use(express.bodyParser());
 app.use(express.cookieParser());
-
+app.set('dir', __dirname);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.set('port', process.env.PORT || 3000)
