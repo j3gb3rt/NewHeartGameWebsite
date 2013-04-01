@@ -44,7 +44,16 @@ function route(app, db_handler, next){
 	}
 
 	app.get('/', simple_page('index'));
-	app.get('/profile', user_page(db_handler, simple_page_with_params('profile'), redirect_page('/login')));
+	app.get('/profile', user_page(db_handler, function (req, res, result){
+		db_handler.user.has_avatar(result.username, function (err, has_avatar){
+			if(err || has_avatar){
+				res.render('/profile', result);
+			} else {
+				res.redirect('/avatar');
+			}
+		})}, 
+	redirect_page('/login')));
+	
 	app.get('/login', user_page(db_handler, redirect_page('/map'), simple_page('login')));
 	app.post('/login', function(req, res){
 		db_handler.user.verify_login(req.body.email, req.body.password, function(err, result){

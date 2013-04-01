@@ -265,15 +265,25 @@ h2 {
 }
 
 .color_selector_box{
-    display:inline-block;border: 1px solid gray;height:55px;padding:5px;position:relative;top:-10px
+    display:inline-block;border: 1px solid gray;height:55px;padding:5px;position:relative;top:-10px;
+
+    background: rgba(255, 200, 200, 0.3);
 }
 
-.arrow_box{
+.arrow_box_left{
     display:inline-block;padding:5px;
 }
-.arrow_box img {
+.arrow_box_right{
+    display:inline-block;padding:5px;
+}
+
+.arrow_box_right img {
     height:70px;cursor :pointer;
 }
+.arrow_box_left img {
+    height:70px;cursor :pointer;
+}
+
 .avatar_selector{
     width:35%;padding-left:15%;float:left;
 }
