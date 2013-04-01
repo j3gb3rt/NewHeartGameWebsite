@@ -2,22 +2,118 @@ doctype
 html(lang='en')
 	head
 		title Avatar Creation
+		script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js")
+		script 
+			$(function(){
+				var groups = ["#skin", "#hair", "#shirt", "#pant", "#eye", "#hair_style", "#shoe_style"];
+				for(var i = 0; i < groups.length; i++){
+					$(groups[i] + " .color_selector").click(switchSelected(groups[i]));
+				}
+				$(".male_button").click(function(){
+					$(".female_button").removeClass('selected');
+					$(".male_button").addClass('selected');
+				});
+				$(".female_button").click(function(){
+					$(".male_button").removeClass('selected');
+					$(".female_button").addClass('selected');
+				});
+			});
+			function switchSelected(group){
+				return function(){
+					$(group + " .color_selector").removeClass('selected');
+					$(this).addClass('selected');
+				};
+			}
 		link(rel="stylesheet", type="text/css", href="assets/stylesheets/style.css")
 	body
 		.avatar_title
 			h1 Create Your Avatar
-		div(style="margin:auto;padding-top:3%;")
-			div(style="width:35%;padding-left:15%;float:left")
-				| Hair Color:
-				ul#hair_color
-					li(style="display:inline") 
-						img(src="assets/avatar/left_arrow.png")
-					div(style="display:inline")
-						li(style="display:inline") ds
-						li(style="display:inline") ds
-					li(style="display:inline")
-						img(src="assets/avatar/right_arrow.png")
-			div(style="width:35%;padding-right:15%;float:right;text-align:center")
+		div(style="margin:auto;padding-top:0.5%;")
+			.avatar_selector
+				.avatar_description Skin Tone:
+				#skin.selector_box
+					.arrow_box
+						img(src="assets/images/avatar/left_arrow.png")
+					.color_selector_box
+						.color_selector.selected(style="background:#{skin_colors[0]}")
+						.color_selector(style="background:#{skin_colors[1]}")
+						.color_selector(style="background:#{skin_colors[2]}")
+						.color_selector(style="background:#{skin_colors[3]}")
+					.arrow_box
+						img(src="assets/images/avatar/right_arrow.png")
+				.avatar_description Hair Color:
+				#hair.selector_box
+					.arrow_box
+						img(src="assets/images/avatar/left_arrow.png")
+					.color_selector_box
+						.color_selector.selected(style="background:#{hair_colors[0]}")
+						.color_selector(style="background:#{hair_colors[1]}")
+						.color_selector(style="background:#{hair_colors[2]}")
+						.color_selector(style="background:#{hair_colors[3]}")
+					.arrow_box
+						img(src="assets/images/avatar/right_arrow.png")
+				.avatar_description Shirt Color:
+				#shirt.selector_box
+					.arrow_box
+						img(src="assets/images/avatar/left_arrow.png")
+					.color_selector_box
+						.color_selector.selected(style="background:#{shirt_colors[0]}")
+						.color_selector(style="background:#{shirt_colors[1]}")
+						.color_selector(style="background:#{shirt_colors[2]}")
+						.color_selector(style="background:#{shirt_colors[3]}")
+					.arrow_box
+						img(src="assets/images/avatar/right_arrow.png")
+				.avatar_description Pant Color:
+				#pant.selector_box
+					.arrow_box
+						img(src="assets/images/avatar/left_arrow.png")
+					.color_selector_box
+						.color_selector.selected(style="background:#{pant_colors[0]}")
+						.color_selector(style="background:#{pant_colors[1]}")
+						.color_selector(style="background:#{pant_colors[2]}")
+						.color_selector(style="background:#{pant_colors[3]}")
+					.arrow_box
+						img(src="assets/images/avatar/right_arrow.png")
+				.avatar_description Eye Color:
+				#eye.selector_box
+					.arrow_box
+						img(src="assets/images/avatar/left_arrow.png")
+					.color_selector_box
+						.color_selector.selected(style="background:#{eye_colors[0]}")
+						.color_selector(style="background:#{eye_colors[1]}")
+						.color_selector(style="background:#{eye_colors[2]}")
+						.color_selector(style="background:#{eye_colors[3]}")
+					.arrow_box
+						img(src="assets/images/avatar/right_arrow.png")
+				.avatar_description Hair Style:
+				#hair_style.selector_box
+					.arrow_box
+						img(src="assets/images/avatar/left_arrow.png")
+					.color_selector_box
+						.color_selector.selected(style="background:url(#{hair_styles[0]});background-repeat: no-repeat;")
+						.color_selector(style="background:url(#{hair_styles[1]});background-repeat: no-repeat;")
+						.color_selector(style="background:url(#{hair_styles[2]});background-repeat: no-repeat;")
+						.color_selector(style="background:url(#{hair_styles[3]});background-repeat: no-repeat;")
+					.arrow_box
+						img(src="assets/images/avatar/right_arrow.png")
+				.avatar_description Shoe Style:
+				#shoe_style.selector_box
+					.arrow_box
+						img(src="assets/images/avatar/left_arrow.png")
+					.color_selector_box
+						.color_selector.selected(style="background:url(#{shoe_styles[0]});background-repeat: no-repeat;")
+						.color_selector(style="background:url(#{shoe_styles[1]});background-repeat: no-repeat;")
+						.color_selector(style="background:url(#{shoe_styles[2]});background-repeat: no-repeat;")
+						.color_selector(style="background:url(#{shoe_styles[3]});background-repeat: no-repeat;")
+					.arrow_box
+						img(src="assets/images/avatar/right_arrow.png")
+			.avatar_diplay
 				.avatar_name
 					| Hello! My Name is #{username}
-				canvas(width=300,height=400,style="background-color:black")
+				div(style="position:relative")
+					.female_button.selected
+						| F
+					.male_button
+						| M
+					div(style="clear:both")
+				canvas(width=250,height=400,style="margin-top:-50px")

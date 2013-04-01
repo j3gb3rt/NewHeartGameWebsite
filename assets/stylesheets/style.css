@@ -244,3 +244,51 @@ h2 {
     font-size:18pt;
     margin-bottom:20px;
 }
+
+.female_button{
+    margin:10px;width:40px;height:40px;border-radius:15px;background:red;float:right;font-size:25px;cursor: pointer;
+}
+
+.male_button{
+    margin:10px;width:40px;height:40px;border-radius:15px;background:blue;float:right;font-size:25px;cursor: pointer;
+}
+
+.avatar_diplay{
+    width:35%;
+    padding-right:15%;
+    float:right;
+    text-align:center;
+}
+
+.color_selector{
+    display:inline-block;width:50px;height:50px;margin-left:5px;margin-right: 5px;cursor :pointer;
+}
+
+.color_selector_box{
+    display:inline-block;border: 1px solid gray;height:55px;padding:5px;position:relative;top:-10px
+}
+
+.arrow_box{
+    display:inline-block;padding:5px;
+}
+.arrow_box img {
+    height:70px;cursor :pointer;
+}
+.avatar_selector{
+    width:35%;padding-left:15%;float:left;
+}
+
+.avatar_selector .avatar_description{
+    padding-left: 35px;
+    margin-bottom: 5px;
+    margin-top: -5px;
+}
+
+.selector_box{
+    margin-top: -10px;
+    height:75px;
+}
+
+.selected{
+    border: 3px solid #FF9999;
+}

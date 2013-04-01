@@ -1,3 +1,5 @@
+var configuration = require('../config');
+
 function route(app, db_handler, next){
 
 	function merge(object1, object2){
@@ -77,7 +79,7 @@ function route(app, db_handler, next){
 			if(err || has_avatar){
 				res.redirect('/map');
 			} else {
-				res.render('avatar', result);
+				res.render('avatar', merge(result, configuration.avatar));
 			}
 		});
 	},redirect_page('/login')));
