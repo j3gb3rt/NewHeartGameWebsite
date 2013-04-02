@@ -96,7 +96,35 @@ function route(app, db_handler, next){
 
 	app.get('/avatars/:params(*+)', function(req, res){
 		res.setHeader('Content-Type', "image/png");
-		gm(app.get('dir') + '/assets/images/avatar/hair_1.png')
+		res.setHeader('Pragma', "no-cache");
+		res.setHeader('Cache-Control', "no-cache, must-revalidate");
+		var params = req.params.params;
+		var skin_color = params.substr(0,1);
+		var hair_color = params.substr(1,1);
+		var shirt_color = params.substr(2,1);
+		var pant_color = params.substr(3,1);
+		var eye_color = params.substr(4,1);
+		var hair_style = params.substr(5,1);
+		var shoe_style = params.substr(6,1);
+		var gender = params.substr(7,1);
+		
+		gm(app.get('dir') + '/assets/images/avatar/body.png')
+		.fill(configuration.avatar.skin_colors[skin_color])
+		.drawEllipse(100, 110, 60, 80)
+		.fill("#DDDDDD")
+		.drawCircle(70, 90, 75, 107)
+		.drawCircle(125, 90, 130, 107)
+		.fill(configuration.avatar.eye_colors[eye_color])
+		.drawCircle(73, 95, 81, 102)
+		.drawCircle(123, 95, 131, 102)
+		.draw('image Over 40,20 120,120"' + app.get('dir') + configuration.avatar.hair_styles[hair_style] + '"')
+		.draw('fill ' + configuration.avatar.hair_colors[hair_color] + ' ; color 100,40 floodfill')
+		.draw('image Over 65,300 80,200"' + app.get('dir') + '/assets/images/avatar/pants_1.png"')
+		.draw('fill ' + configuration.avatar.pant_colors[pant_color] + ' ; color 100,320 floodfill')
+		.draw('image Over 10,190 180,200"' + app.get('dir') + '/assets/images/avatar/shirt_' + gender + '.png"')
+		.draw('fill ' + configuration.avatar.shirt_colors[shirt_color] + ' ; color 100,260 floodfill')
+		.draw('image Over 62,490 40,40"' + app.get('dir') + '/assets/images/avatar/shoe.png"')
+		.draw('image Over 108,490 40,40"' + app.get('dir') + '/assets/images/avatar/shoe.png"')
 		.stream(function (err, stdout, stderr) {
 			if (err) next(err);
       		stdout.pipe(res);

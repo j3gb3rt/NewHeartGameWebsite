@@ -1,0 +1,9 @@
+.arrow_box_left
+	img(src="assets/images/avatar/left_arrow.png")
+.color_selector_box
+	.color_selector.selected(style="background:#{group_array[0]}", data-id=0)
+	- for (var i = 1; i < group_array.length; i++){
+		.color_selector(style="background:#{group_array[i]}",data-id=i)
+	- }
+.arrow_box_right
+	img(src="assets/images/avatar/right_arrow.png")

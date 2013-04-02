@@ -4,27 +4,31 @@ html(lang='en')
 		title Avatar Creation
 		script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js")
 		script 
+			var selection = [0, 0, 0, 0, 0, 0, 0, 0];
 			$(function(){
 				var groups = ["#skin", "#hair", "#shirt", "#pant", "#eye", "#hair_style", "#shoe_style"];
 				for(var i = 0; i < groups.length; i++){
-					$(groups[i] + " .color_selector").click(switchSelected(groups[i]));
+					$(groups[i] + " .color_selector").click(switch_selected(groups[i], i));
 				}
 				$(".male_button").click(function(){
 					$(".female_button").removeClass('selected');
 					$(".male_button").addClass('selected');
+					selection[7] = 1;
+					$("#avatar_image").attr('src', "/avatars/" + selection.join(""));
 				});
 				$(".female_button").click(function(){
 					$(".male_button").removeClass('selected');
 					$(".female_button").addClass('selected');
-				});
-				$(".selector_box .arrow_box_left").click(function(){
-					
+					selection[7] = 0;
+					$("#avatar_image").attr('src', "/avatars/" + selection.join(""));
 				});
 			});
-			function switchSelected(group){
+			function switch_selected(group, group_num){
 				return function(){
 					$(group + " .color_selector").removeClass('selected');
 					$(this).addClass('selected');
+					selection[group_num] = $(this).attr('data-id');
+					$("#avatar_image").attr('src', "/avatars/" + selection.join(""));
 				};
 			}
 		link(rel="stylesheet", type="text/css", href="assets/stylesheets/style.css")
@@ -34,82 +38,33 @@ html(lang='en')
 		div(style="margin:auto;padding-top:0.5%;")
 			.avatar_selector
 				.avatar_description Skin Tone:
-				#skin.selector_box
-					.arrow_box_left
-						img(src="assets/images/avatar/left_arrow.png")
-					.color_selector_box
-						.color_selector.selected(style="background:#{skin_colors[0]}")
-						.color_selector(style="background:#{skin_colors[1]}")
-						.color_selector(style="background:#{skin_colors[2]}")
-						.color_selector(style="background:#{skin_colors[3]}")
-					.arrow_box_right
-						img(src="assets/images/avatar/right_arrow.png")
+				#skin.selector_box(data-id=0)
+					- var group_array = skin_colors
+					include color_selector
 				.avatar_description Hair Color:
-				#hair.selector_box
-					.arrow_box_left
-						img(src="assets/images/avatar/left_arrow.png")
-					.color_selector_box
-						.color_selector.selected(style="background:#{hair_colors[0]}")
-						.color_selector(style="background:#{hair_colors[1]}")
-						.color_selector(style="background:#{hair_colors[2]}")
-						.color_selector(style="background:#{hair_colors[3]}")
-					.arrow_box_right
-						img(src="assets/images/avatar/right_arrow.png")
-				.avatar_description Shirt Color:
-				#shirt.selector_box
-					.arrow_box_left
-						img(src="assets/images/avatar/left_arrow.png")
-					.color_selector_box
-						.color_selector.selected(style="background:#{shirt_colors[0]}")
-						.color_selector(style="background:#{shirt_colors[1]}")
-						.color_selector(style="background:#{shirt_colors[2]}")
-						.color_selector(style="background:#{shirt_colors[3]}")
-					.arrow_box_right
-						img(src="assets/images/avatar/right_arrow.png")
+				#hair.selector_box(data-id=1)
+					- var group_array = hair_colors
+					include color_selector
+				.avatar_description Shirt Color
+				#shirt.selector_box(data-id=2)
+					- var group_array = shirt_colors
+					include color_selector
 				.avatar_description Pant Color:
-				#pant.selector_box
-					.arrow_box_left
-						img(src="assets/images/avatar/left_arrow.png")
-					.color_selector_box
-						.color_selector.selected(style="background:#{pant_colors[0]}")
-						.color_selector(style="background:#{pant_colors[1]}")
-						.color_selector(style="background:#{pant_colors[2]}")
-						.color_selector(style="background:#{pant_colors[3]}")
-					.arrow_box_right
-						img(src="assets/images/avatar/right_arrow.png")
+				#pant.selector_box(data-id=3)
+					- var group_array = pant_colors
+					include color_selector
 				.avatar_description Eye Color:
-				#eye.selector_box
-					.arrow_box_left
-						img(src="assets/images/avatar/left_arrow.png")
-					.color_selector_box
-						.color_selector.selected(style="background:#{eye_colors[0]}")
-						.color_selector(style="background:#{eye_colors[1]}")
-						.color_selector(style="background:#{eye_colors[2]}")
-						.color_selector(style="background:#{eye_colors[3]}")
-					.arrow_box_right
-						img(src="assets/images/avatar/right_arrow.png")
+				#eye.selector_box(data-id=4)
+					- var group_array = eye_colors
+					include color_selector
 				.avatar_description Hair Style:
-				#hair_style.selector_box
-					.arrow_box_left
-						img(src="assets/images/avatar/left_arrow.png")
-					.color_selector_box
-						.color_selector.selected(style="background:url(#{hair_styles[0]});background-repeat: no-repeat;")
-						.color_selector(style="background:url(#{hair_styles[1]});background-repeat: no-repeat;")
-						.color_selector(style="background:url(#{hair_styles[2]});background-repeat: no-repeat;")
-						.color_selector(style="background:url(#{hair_styles[3]});background-repeat: no-repeat;")
-					.arrow_box_right
-						img(src="assets/images/avatar/right_arrow.png")
+				#hair_style.selector_box(data-id=5)
+					- var group_array = hair_styles
+					include image_selector.jade
 				.avatar_description Shoe Style:
-				#shoe_style.selector_box
-					.arrow_box_left
-						img(src="assets/images/avatar/left_arrow.png")
-					.color_selector_box
-						.color_selector.selected(style="background:url(#{shoe_styles[0]});background-repeat: no-repeat;")
-						.color_selector(style="background:url(#{shoe_styles[1]});background-repeat: no-repeat;")
-						.color_selector(style="background:url(#{shoe_styles[2]});background-repeat: no-repeat;")
-						.color_selector(style="background:url(#{shoe_styles[3]});background-repeat: no-repeat;")
-					.arrow_box_right
-						img(src="assets/images/avatar/right_arrow.png")
+				#shoe_style.selector_box(data-id=6)
+					- var group_array = shoe_styles
+					include image_selector.jade
 			.avatar_diplay
 				.avatar_name
 					| Hello! My Name is #{username}
@@ -119,4 +74,4 @@ html(lang='en')
 					.male_button
 						| M
 					div(style="clear:both")
-				canvas(width=250,height=400,style="margin-top:-50px")
+				img#avatar_image(src='/avatars/00000000')
