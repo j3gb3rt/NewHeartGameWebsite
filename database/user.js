@@ -47,13 +47,24 @@ user.delete_user_session = function(req, res, callback){
 };
 
 user.has_avatar = function (identity, callback){
-	db.query('select * from users, avatars where (users.email = ? or users.username = ?) and avatars.email = users.email', [identity, identity], function(err, rows){
+	db.query('select avatars.url from users, avatars where (users.email = ? or users.username = ?) and avatars.email = users.email', [identity, identity], function(err, rows){
 		if(err){
 			callback(err, null);
 		} else {
-			callback(err, rows.length != 0);
+			callback(err, rows[0]);
 		}
 	});	
 };
+
+user.save_avatar = function (email, url, callback){
+	db.query('insert into avatars (email, url) values (?, ?)', [email, url], function(err, rows){
+		if(err){
+			callback(err, null);
+		} else {
+			callback(err, null);
+		}
+	});	
+};
+
 
 module.exports.user = user;

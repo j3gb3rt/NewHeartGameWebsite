@@ -46,9 +46,9 @@ function route(app, db_handler, next){
 
 	app.get('/', simple_page('index'));
 	app.get('/profile', user_page(db_handler, function (req, res, result){
-		db_handler.user.has_avatar(result.username, function (err, has_avatar){
-			if(err || has_avatar){
-				res.render('/profile', result);
+		db_handler.user.has_avatar(result.username, function (err, avatar){
+			if(err || avatar){
+				res.render('profile', merge(result, avatar));
 			} else {
 				res.redirect('/avatar');
 			}
@@ -90,6 +90,21 @@ function route(app, db_handler, next){
 				res.redirect('/map');
 			} else {
 				res.render('avatar', merge(result, configuration.avatar));
+			}
+		});
+	},redirect_page('/login')));
+	app.post('/avatar', user_page(db_handler, function (req, res, result){
+		db_handler.user.has_avatar(result.username, function (err, has_avatar){
+			if(err || has_avatar){
+				res.redirect('/map');
+			} else {
+				db_handler.user.save_avatar(result.email, req.body.url, function(err){
+					if(err){
+						res.render('/avatar');
+					} else {
+						res.redirect('/map');
+					}
+				});
 			}
 		});
 	},redirect_page('/login')));
