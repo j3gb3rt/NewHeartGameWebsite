@@ -112,7 +112,6 @@ label.stat.attribute {
 #map {
     position: absolute;
     width: 70%;
-    height: 70%;
     top: 10%;
     left: 15%;
     z-index: -1;
