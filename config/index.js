@@ -1,9 +1,9 @@
 var configuration = {};
 configuration.db_user = "root";
-configuration.db_host = "localhost";
-configuration.db_database = "new_heart_game";
-configuration.db_password = "password";
-configuration.db_salt = "HelloWorld";
+configuration.db_host = "localhost:3306";
+configuration.db_database = "mydb";
+configuration.db_password = "myfakepasswordthing";
+configuration.db_salt = "lkjioiu";
 
 configuration.avatar = {};
 configuration.avatar.skin_colors = ['#110000', '#0000FF', '#FF0000', '#00FF00'];

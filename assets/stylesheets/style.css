@@ -110,14 +110,13 @@ label.stat.attribute {
 
 /*MAP*/
 #map {
-    background: url('/assets/images/map/background.png') no-repeat center center;
-    background-size: 80%;
     position: absolute;
-    width: 50%;
-    height: 50%;
-    top: 20%;
-    left: 25%;
+    width: 70%;
+    height: 70%;
+    top: 10%;
+    left: 15%;
     z-index: -1;
+	padding: 25px;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
