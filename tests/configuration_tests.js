@@ -10,5 +10,12 @@ describe('config', function(){
 		assert.ok(configuration.db_password);
 		assert.ok(configuration.db_database);
 		assert.ok(configuration.db_salt.length > 0);
+		assert.ok(configuration.avatar.skin_colors.length > 0);
+		assert.ok(configuration.avatar.hair_colors.length > 0);
+		assert.ok(configuration.avatar.shirt_colors.length > 0);
+		assert.ok(configuration.avatar.pant_colors.length > 0);
+		assert.ok(configuration.avatar.eye_colors.length > 0);
+		assert.ok(configuration.avatar.hair_styles.length > 0);
+		assert.ok(configuration.avatar.shoe_styles.length > 0);
 	});
 });

@@ -9,3 +9,10 @@ Sincerely,
 New Heart Game Design Team
 New Heart Cardiac Rehabilitation Center - Albuquerque, New Mexico
 Georgia Institute of Technology; School of Literature, Media, and Communication - Atlanta, Georgia
+
+Techinical Notes:
+==========================
+
+In order to run this website, make sure you have node.js, GraphicsMagick, and MySQL installed.
+There is a "config/index.js" file that that is not part of the repository that is also needed.
+Check test cases to see what the config file requires.
