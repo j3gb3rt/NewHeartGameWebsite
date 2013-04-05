@@ -11,22 +11,44 @@ html(lang='en')
 				for(var i = 0; i < groups.length; i++){
 					$(groups[i] + " .color_selector").click(switch_selected(groups[i], i));
 				}
-				$(".male_button").click(function(){
-					$(".female_button").removeClass('selected');
-					$(".male_button").addClass('selected');
-					selection[7] = 1;
-					update_selection();
-				});
-				$(".female_button").click(function(){
-					$(".male_button").removeClass('selected');
-					$(".female_button").addClass('selected');
-					selection[7] = 0;
+				$(".avatar_image_button").click(function(){
+					$(".avatar_image_button").removeClass('selected');
+					$(this).addClass('selected');
+					selection[7] = 1 - selection[7];
 					update_selection();
 				});
 				$('#save_avatar').click(function(){ 
 					var conf = confirm("Are you sure you finished creating your avatar?");
 					if(conf){
 						$('#avatar_form').submit();
+					}
+				});
+				$('.arrow_box_left').click(function(){
+					var id = '#' + $(this).parent('.selector_box').attr('id');
+					for(var i = 0; i < groups.length; i++){
+						if(groups[i] == id){
+							if(selection[i] < 1)
+								return true;
+							selection[i]--;
+							$(id + ' .color_selector').removeClass('selected');
+							$(id + ' .color_selector:nth-child(' + (selection[i] + 1) + ')').addClass('selected');
+							update_selection();
+							return true;
+						}
+					}
+				});
+				$('.arrow_box_right').click(function(){
+					var id = '#' + $(this).parent('.selector_box').attr('id');
+					for(var i = 0; i < groups.length; i++){
+						if(groups[i] == id){
+							if(selection[i] > 3 || (i != 5 && selection[i] > 2))
+								return true;
+							selection[i]++;
+							$(id + ' .color_selector').removeClass('selected');
+							$(id + ' .color_selector:nth-child(' + (selection[i] + 1) + ')').addClass('selected');
+							update_selection();
+							return true;
+						}
 					}
 				});
 			});
@@ -44,9 +66,9 @@ html(lang='en')
 			}
 	body
 		.avatar_title
-			div(style="position:absolute; left:1%;")
+			#save_avatar(style="position:absolute; left:1%;z-index:100")
 				a(href="#")
-					img#save_avatar(src="/assets/images/avatar/HouseIcon.png")
+					img(src="/assets/images/avatar/HouseIcon.png")
 			h1 Create Your Avatar
 		div(style="margin:auto;padding-top:0.5%;")
 			.avatar_selector
@@ -82,9 +104,9 @@ html(lang='en')
 				.avatar_name
 					| Hello! My Name is #{username}
 				div(style="position:relative")
-					.female_button.selected
+					img.avatar_image_button.selected(src='/assets/images/avatar/female.png')
 						| F
-					.male_button
+					img.avatar_image_button(src='/assets/images/avatar/male.png')
 						| M
 					div(style="clear:both")
 				img#avatar_image(src='/avatars/00000000')

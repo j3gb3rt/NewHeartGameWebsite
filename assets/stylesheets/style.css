@@ -243,12 +243,11 @@ h2 {
     margin-bottom:20px;
 }
 
-.female_button{
-    margin:10px;width:40px;height:40px;border-radius:15px;background:red;float:right;font-size:25px;cursor: pointer;
-}
-
-.male_button{
-    margin:10px;width:40px;height:40px;border-radius:15px;background:blue;float:right;font-size:25px;cursor: pointer;
+.avatar_image_button{
+    width:40px;
+    height:40px;
+    float:right;
+    cursor: pointer;
 }
 
 .avatar_diplay{
@@ -300,3 +299,7 @@ h2 {
 .selected{
     border: 3px solid #FF9999;
 }
+img.selected{
+    border: 3px solid #FF9999;border-radius: 18px;
+}
+
