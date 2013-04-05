@@ -110,9 +110,6 @@ function route(app, db_handler, next){
 		});
 	},redirect_page('/login')));
 	
-	
-	
-	
 	app.get('/avatars/:params(*+)', function(req, res){
 		res.setHeader('Content-Type', "image/png");
 		res.setHeader('Pragma', "no-cache");
@@ -126,24 +123,27 @@ function route(app, db_handler, next){
 		var hair_style = params.substr(5,1);
 		var shoe_style = params.substr(6,1);
 		var gender = params.substr(7,1);
-		
+		var hair_y = 10;
+		var hair_color_y = 45;
+		if(hair_style == 4){
+			hair_y = -55;
+		} else if(hair_style == 1 || hair_style == 2){
+			hair_y = -25;
+		}
 		gm(app.get('dir') + '/assets/images/avatar/body.png')
 		.fill(configuration.avatar.skin_colors[skin_color])
-		.drawEllipse(100, 110, 60, 80)
-		.fill("#DDDDDD")
-		.drawCircle(70, 90, 75, 107)
-		.drawCircle(125, 90, 130, 107)
-		.fill(configuration.avatar.eye_colors[eye_color])
-		.drawCircle(73, 95, 81, 102)
-		.drawCircle(123, 95, 131, 102)
-		.draw('image Over 40,20 120,120"' + app.get('dir') + configuration.avatar.hair_styles[hair_style] + '"')
-		.draw('fill ' + configuration.avatar.hair_colors[hair_color] + ' ; color 100,40 floodfill')
-		.draw('image Over 65,300 80,200"' + app.get('dir') + '/assets/images/avatar/pants_1.png"')
+		.draw('image Over 40,30 120,160"' + app.get('dir') + '/assets/images/avatar/face.png"')
+		.draw('fill ' + configuration.avatar.skin_colors[skin_color] + ' ; color 78,98 floodfill')
+		.draw('image Over 50,70 100,40"' + app.get('dir') + '/assets/images/avatar/eyes.png"')
+		.draw('fill ' + configuration.avatar.eye_colors[eye_color] + ' ; color 78,98 floodfill')
+		.draw('fill ' + configuration.avatar.eye_colors[eye_color] + ' ; color 128,98 floodfill')
+		.draw('image Over 15,' + hair_y + ' 170,180 "' + app.get('dir') + configuration.avatar.hair_styles[hair_style] + '"')
+		.draw('fill ' + configuration.avatar.hair_colors[hair_color] + ' ; color 100,' + hair_color_y + ' floodfill')
+		.draw('image Over 65,300 80,200 "' + app.get('dir') + '/assets/images/avatar/pants.png"')
 		.draw('fill ' + configuration.avatar.pant_colors[pant_color] + ' ; color 100,320 floodfill')
-		.draw('image Over 10,190 180,200"' + app.get('dir') + '/assets/images/avatar/shirt_' + gender + '.png"')
+		.draw('image Over 10,190 180,200 "' + app.get('dir') + '/assets/images/avatar/shirt.png"')
 		.draw('fill ' + configuration.avatar.shirt_colors[shirt_color] + ' ; color 100,260 floodfill')
-		.draw('image Over 62,490 40,40"' + app.get('dir') + '/assets/images/avatar/shoe.png"')
-		.draw('image Over 108,490 40,40"' + app.get('dir') + '/assets/images/avatar/shoe.png"')
+		.draw('image Over 60,490 87,40"' + app.get('dir') + configuration.avatar.shoe_styles[shoe_style] + '"')
 		.stream(function (err, stdout, stderr) {
 			if (err) next(err);
       		stdout.pipe(res);
