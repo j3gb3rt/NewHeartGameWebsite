@@ -1,11 +1,18 @@
+var fs = require('fs');
 var express = require('express');
 var app = express();
 var db_handler = require('./database');
 var configuration = require('./config');
 var routers = require('./routers');
 
+var DEVELOPMENT = 'dev';
+var environment = DEVELOPMENT;
+
 app.use(express.bodyParser());
 app.use(express.cookieParser());
+if(environment == DEVELOPMENT){
+	app.use(express.logger({stream: fs.createWriteStream('./dev-debug.log', {flags: 'a'})}));
+}
 app.set('dir', __dirname);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');

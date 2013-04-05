@@ -17,18 +17,16 @@ function query(query, params, callback){
 			connection.query(query, params, function(err, rows) {
 				if(err){
 					console.log(err);	
-				} else {
-					callback(err, rows);
 				}
+				callback(err, rows);
 		    	connection.end();
 			});
 		} else {
 			connection.query(query, function(err, rows) {
 				if(err){
 					console.log(err);	
-				} else {
-					params(err, rows);
 				}
+				params(err, rows);
 		    	connection.end();
 			});
 		}

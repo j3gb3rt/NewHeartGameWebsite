@@ -44,7 +44,7 @@ function route(app, db_handler, next){
 		};
 	}
 
-	app.get('/', simple_page('index'));
+	app.get('/', user_page(db_handler, simple_page('index'), simple_page('index')));
 	app.get('/map', user_page(db_handler, simple_page_with_params('map'), simple_page_with_params('map')));
 	app.get('/profile', user_page(db_handler, function (req, res, result){
 		db_handler.user.has_avatar(result.username, function (err, avatar){
@@ -75,6 +75,7 @@ function route(app, db_handler, next){
 	app.post('/signup', function(req, res) {
 		db_handler.user.create_user(req.body.username, req.body.email, req.body.password, function(err, result){
 			if(err){
+				console.log(err);
 				res.redirect('/signup');
 			} else {
 				db_handler.query('select session_token from users where username = ? or email = ?', 
