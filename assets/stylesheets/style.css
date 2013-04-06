@@ -15,7 +15,7 @@ fieldset {
 }
 
 .content{
-    margin-bottom: 200px;
+    margin-bottom: 10%;
 }
 
 input[type=range]:before { content: attr(min); padding-right: 5px; }
@@ -110,11 +110,9 @@ label.stat.attribute {
 
 /*MAP*/
 #map {
-    position: absolute;
+    position: relative;
     width: 70%;
-    top: 10%;
-    left: 15%;
-    z-index: -1;
+    z-index: 1;
 	padding: 25px;
     text-align: center;
     margin-left: auto;
@@ -151,6 +149,17 @@ label.stat.attribute {
     bottom: 15%;
 }
 
+.ghostbox{
+    position:absolute;
+    z-index:5;
+}
+
+.ghostbox .hoverghost{
+    display:none;
+}
+.ghostbox:hover .hoverghost{
+    display:block;
+}
 
 /*NAVIGATION*/
 #navigation_container {
@@ -299,7 +308,10 @@ h2 {
 .selected{
     border: 3px solid #FF9999;
 }
+
 img.selected{
     border: 3px solid #FF9999;border-radius: 18px;
 }
+
+
 
