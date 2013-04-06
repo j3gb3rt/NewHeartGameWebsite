@@ -44,7 +44,7 @@ function route(app, db_handler, next){
 		};
 	}
 
-	app.get('/', user_page(db_handler, simple_page('index'), simple_page('index')));
+	app.get('/', user_page(db_handler, simple_page_with_params('index'), simple_page_with_params('index')));
 	app.get('/map', user_page(db_handler, simple_page_with_params('map'), simple_page_with_params('map')));
 	app.get('/profile', user_page(db_handler, function (req, res, result){
 		db_handler.user.has_avatar(result.username, function (err, avatar){
