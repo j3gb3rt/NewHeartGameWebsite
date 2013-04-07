@@ -14,5 +14,28 @@ Techinical Notes:
 ==========================
 
 In order to run this website, make sure you have node.js, GraphicsMagick, and MySQL installed.
-There is a "config/index.js" file that that is not part of the repository that is also needed.
-Check test cases to see what the config file requires.
+There is a "config/database.js" file that that is not part of the repository that is also needed.
+
+It follows the below format:
+
+    var configuration = {};
+    configuration.db_user = "";
+    configuration.db_host = "";
+    configuration.db_database = "";
+    configuration.db_password = "";
+    configuration.db_salt = "";
+
+    module.exports = configuration;
+
+
+After creating the file and filling in the appropiate information, the file "database/database_setup.js" should be run. 
+It should return
+
+    database setup
+    
+If not, "config/database.js" was not set up correctly or you MySQL database is not running.
+
+
+Once everything is setup, you can then start the server in a terminal by running 
+
+    node server.js
