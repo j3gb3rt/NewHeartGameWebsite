@@ -10,8 +10,9 @@ var environment = DEVELOPMENT;
 app.use(express.favicon(__dirname + '/assets/images/favicon.ico'));
 app.use(express.bodyParser());
 app.use(express.cookieParser());
+app.set('start time', Date.now());
 if(environment == DEVELOPMENT){
-	app.use(express.logger({stream: fs.createWriteStream('./dev-debug.log', {flags: 'a'})}));
+	app.use(express.logger({stream: fs.createWriteStream('./logs/dev-debug-' + app.get('start time') + '.log', {flags: 'w'})}));
 }
 app.set('dir', __dirname);
 app.set('views', __dirname + '/views');

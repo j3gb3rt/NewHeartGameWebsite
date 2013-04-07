@@ -146,7 +146,7 @@ function route(app, db_handler, next){
 		.draw('fill ' + configuration.avatar.shirt_colors[shirt_color] + ' ; color 100,260 floodfill')
 		.draw('image Over 60,490 87,40"' + app.get('dir') + configuration.avatar.shoe_styles[shoe_style] + '"')
 		.stream(function (err, stdout, stderr) {
-			if (err) next(err);
+			if(err) console.log(err);
       		stdout.pipe(res);
     	});
 	});
