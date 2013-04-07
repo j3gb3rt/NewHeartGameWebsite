@@ -13,7 +13,7 @@ Georgia Institute of Technology; School of Literature, Media, and Communication 
 Techinical Notes:
 ==========================
 
-In order to run this website, make sure you have node.js, GraphicsMagick, and MySQL installed.
+In order to run this website, make sure you have node.js, GraphicsMagick, libpng-1.0.2 or better, and MySQL installed.
 There is a "config/database.js" file that that is not part of the repository that is also needed.
 
 It follows the below format:
