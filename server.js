@@ -7,7 +7,7 @@ var routers = require('./routers');
 
 var DEVELOPMENT = 'dev';
 var environment = DEVELOPMENT;
-
+app.use(express.favicon(__dirname + '/assets/images/favicon.ico'));
 app.use(express.bodyParser());
 app.use(express.cookieParser());
 if(environment == DEVELOPMENT){
