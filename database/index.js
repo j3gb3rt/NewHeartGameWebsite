@@ -13,6 +13,7 @@ function query(query, params, callback){
 	pool.getConnection(function(err, connection) {
 		if(err){
 			console.log(err);
+			connection.end();
 		} else if(callback){
 			connection.query(query, params, function(err, rows) {
 				if(err){
