@@ -14,7 +14,7 @@ html(lang='en')
 				$(".avatar_image_button").click(function(){
 					$(".avatar_image_button").removeClass('selected');
 					$(this).addClass('selected');
-					selection[7] = 1 - selection[7];
+					selection[7] = $(this).attr('data-id');
 					update_selection();
 				});
 				$('#save_avatar').click(function(){ 
@@ -41,7 +41,7 @@ html(lang='en')
 					var id = '#' + $(this).parent('.selector_box').attr('id');
 					for(var i = 0; i < groups.length; i++){
 						if(groups[i] == id){
-							if(selection[i] > 3 || (i != 5 && selection[i] > 2))
+							if(selection[i] > 2)
 								return true;
 							selection[i]++;
 							$(id + ' .color_selector').removeClass('selected');
@@ -66,8 +66,8 @@ html(lang='en')
 			}
 	body
 		.avatar_title
-			#save_avatar(style="position:absolute; left:1%;z-index:100")
-				a(href="#")
+			div(style="position:absolute; left:1%;z-index:100")
+				a(href="/profile")
 					img(src="/assets/images/avatar/HouseIcon.png")
 			h1 Create Your Avatar
 		div(style="margin:auto;padding-top:0.5%;")
@@ -100,13 +100,14 @@ html(lang='en')
 				#shoe_style.selector_box(data-id=6)
 					- var group_array = shoe_styles
 					include image_selector.jade
+				img#save_avatar(src='/assets/images/avatar/AvatarSaveButton.png', width='150px')
 			.avatar_diplay
 				.avatar_name
 					| Hello! My Name is #{username}
 				div(style="position:relative")
-					img.avatar_image_button.selected(src='/assets/images/avatar/female.png')
+					img.avatar_image_button.selected(src='/assets/images/avatar/female.png', data-id=0)
 						| F
-					img.avatar_image_button(src='/assets/images/avatar/male.png')
+					img.avatar_image_button(src='/assets/images/avatar/male.png', data-id=1)
 						| M
 					div(style="clear:both")
 				img#avatar_image(src='/avatars/00000000')

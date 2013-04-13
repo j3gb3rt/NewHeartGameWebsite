@@ -62,7 +62,16 @@ function route(app, db_handler, next){
 			if(err){
 				res.redirect('/login');
 			} else{
-				db_handler.user.set_user_session(req, res, req.body.email, result.session_token, redirect_page('/map'));
+				db_handler.user.set_user_session(req, res, req.body.email, result.session_token, 
+					function (req, res){
+						db_handler.user.has_avatar(result.username, function (err, has_avatar){
+							if(err || has_avatar){
+								res.redirect('/map');
+							} else {
+								res.render('avatar', merge(result, configuration.avatar));
+							}
+					});
+				});
 			}
 		});
 	});
@@ -75,7 +84,6 @@ function route(app, db_handler, next){
 	app.post('/signup', function(req, res) {
 		db_handler.user.create_user(req.body.username, req.body.email, req.body.password, function(err, result){
 			if(err){
-				console.log(err);
 				res.redirect('/signup');
 			} else {
 				db_handler.query('select session_token from users where username = ? or email = ?', 
@@ -87,26 +95,14 @@ function route(app, db_handler, next){
 	});
 
 	app.get('/avatar', user_page(db_handler, function (req, res, result){
-		db_handler.user.has_avatar(result.username, function (err, has_avatar){
-			if(err || has_avatar){
-				res.redirect('/map');
-			} else {
 				res.render('avatar', merge(result, configuration.avatar));
-			}
-		});
 	},redirect_page('/login')));
 	app.post('/avatar', user_page(db_handler, function (req, res, result){
-		db_handler.user.has_avatar(result.username, function (err, has_avatar){
-			if(err || has_avatar){
-				res.redirect('/map');
+		db_handler.user.save_avatar(result.email, req.body.url, function(err){
+			if(err){
+				res.render('avatar', merge(result, configuration.avatar));
 			} else {
-				db_handler.user.save_avatar(result.email, req.body.url, function(err){
-					if(err){
-						res.render('avatar');
-					} else {
-						res.redirect('/map');
-					}
-				});
+				res.redirect('/profile');
 			}
 		});
 	},redirect_page('/login')));
@@ -132,19 +128,12 @@ function route(app, db_handler, next){
 			hair_y = -25;
 		}
 		gm(app.get('dir') + '/assets/images/avatar/body.png')
-		.fill(configuration.avatar.skin_colors[skin_color])
-		.draw('image Over 40,30 120,160"' + app.get('dir') + '/assets/images/avatar/face.png"')
-		.draw('fill ' + configuration.avatar.skin_colors[skin_color] + ' ; color 78,98 floodfill')
-		.draw('image Over 50,70 100,40"' + app.get('dir') + '/assets/images/avatar/eyes.png"')
-		.draw('fill ' + configuration.avatar.eye_colors[eye_color] + ' ; color 78,98 floodfill')
-		.draw('fill ' + configuration.avatar.eye_colors[eye_color] + ' ; color 128,98 floodfill')
-		.draw('image Over 15,' + hair_y + ' 170,180 "' + app.get('dir') + configuration.avatar.hair_styles[hair_style] + '"')
-		.draw('fill ' + configuration.avatar.hair_colors[hair_color] + ' ; color 100,' + hair_color_y + ' floodfill')
-		.draw('image Over 65,300 80,200 "' + app.get('dir') + '/assets/images/avatar/pants.png"')
-		.draw('fill ' + configuration.avatar.pant_colors[pant_color] + ' ; color 100,320 floodfill')
-		.draw('image Over 10,190 180,200 "' + app.get('dir') + '/assets/images/avatar/shirt.png"')
-		.draw('fill ' + configuration.avatar.shirt_colors[shirt_color] + ' ; color 100,260 floodfill')
-		.draw('image Over 60,490 87,40"' + app.get('dir') + configuration.avatar.shoe_styles[shoe_style] + '"')
+		.draw('image Over 40,30 120,160"' + app.get('dir') + '/assets/images/avatar/face' + skin_color + '.png"')
+		.draw('image Over 50,70 100,40"' + app.get('dir') + '/assets/images/avatar/eyes' + eye_color + '.png"')
+		.draw('image Over 15,' + hair_y + ' 170,180 "' + app.get('dir') + '/assets/images/avatar/hairstyle' + hair_style + 'color' + hair_color + '.png"')
+		.draw('image Over 62,300 78,200 "' + app.get('dir') + '/assets/images/avatar/pants' + pant_color + '.png"')
+		.draw('image Over 0,190 200,200 "' + app.get('dir') + '/assets/images/avatar/' + (gender == 0 ? 'girl' : '') + 'shirt' + shirt_color + '.png"')
+		.draw('image Over 57,490 85,40"' + app.get('dir') + '/assets/images/avatar/shoe'+ shoe_style + '.png"')
 		.stream(function (err, stdout, stderr) {
 			if(err) console.log(err);
       		stdout.pipe(res);

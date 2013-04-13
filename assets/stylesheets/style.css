@@ -272,7 +272,6 @@ h2 {
 
 .color_selector_box{
     display:inline-block;border: 1px solid gray;height:55px;padding:5px;position:relative;top:-10px;
-
     background: rgba(255, 200, 200, 0.3);
 }
 
@@ -291,7 +290,7 @@ h2 {
 }
 
 .avatar_selector{
-    width:35%;padding-left:15%;float:left;
+    width:35%;padding-left:15%;float:left;text-align: center;
 }
 
 .avatar_selector .avatar_description{
@@ -313,5 +312,7 @@ img.selected{
     border: 3px solid #FF9999;border-radius: 18px;
 }
 
-
+#save_avatar{
+    cursor: pointer;
+}
 

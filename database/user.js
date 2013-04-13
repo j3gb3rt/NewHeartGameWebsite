@@ -57,7 +57,7 @@ user.has_avatar = function (identity, callback){
 };
 
 user.save_avatar = function (email, url, callback){
-	db.query('insert into avatars (email, url) values (?, ?)', [email, url], function(err, rows){
+	db.query('insert into avatars (email, url) values (?, ?) on duplicate key update url = values(url)', [email, url], function(err, rows){
 		if(err){
 			callback(err, null);
 		} else {
