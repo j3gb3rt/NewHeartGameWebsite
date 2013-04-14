@@ -1,5 +1,5 @@
 var avatar = {}
-avatar.skin_colors = ['#fbaf5d', '#fbcc9a', '#a67c52', '#603913'];
+avatar.skin_colors = ['#fbcc9a', '#c99e67', '#936037', '#432a19'];
 avatar.hair_colors = ['#8dc73f', '#d1a62d', '#000000', '#9e0b0f'];
 avatar.shirt_colors = ['#f8941d', '#662d91', '#0054a6', '#8dc73f'];
 avatar.pant_colors = ['#f26d7d', '#cdcccc', '#111111', '#c69c6d'];
