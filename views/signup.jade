@@ -16,11 +16,37 @@ block content
 			td
 				form(action="signup", method="post")
 					fieldset#inputs
-						input#email(type="email", placeholder="E-mail address", name="email", autofocus, required)
-						input#email_verify(type="email", placeholder="E-mail address again", required)
-						input#hero_name(type="text", placeholder="Hero name", name="username", required)
-						input#password(type="password", placeholder="Password", name="password", required)
-						input#password_verify(type="password", placeholder="Password again", required)
+						table
+							tr
+								td
+									label(for='email')
+										| E-mail:
+								td
+									input#email(type="email", placeholder="E-mail address", name="email", autofocus, required)
+							tr
+								td
+									label(for='email_verify')
+										| Confirm E-mail:
+								td
+									input#email_verify(type="email", placeholder="E-mail address again", required)
+							tr
+								td
+									label(for='hero_name')
+										| Name:
+								td
+									input#hero_name(type="text", placeholder="Hero name", name="username", required)
+							tr
+								td
+									label(for='password')
+										| Password:
+								td
+									input#password(type="password", placeholder="Password", name="password", required)
+							tr
+								td
+									label(for='password_verify')
+										| Confirm Password:
+								td
+									input#password_verify(type="password", placeholder="Password again", required)
 					fieldset#actions
 						input#submit(type="submit", value="Sign Up")
 						br

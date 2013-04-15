@@ -49,11 +49,11 @@ input[type=range]:after { content: attr(max); padding-left: 5px;}
 
 /*LOGIN*/
 #login {
-    width: 250px;
+    width: 300px;
     height: 200px;
     padding: 20px;
     position: absolute;
-    margin-left: -135px;
+    margin-left: -180px;
     margin-top: -150px;
     left: 50%;
     top: 35%;
@@ -62,12 +62,12 @@ input[type=range]:after { content: attr(max); padding-left: 5px;}
 
 /*SIGNUP*/
 #signup {
-    width: 525px;
+    width: 700px;
     height: 400px;
     padding: 25px;
     position: absolute;
-    margin-left: -275px;
-    margin-top: -200px;
+    margin-left: -300px;
+    margin-top: -150px;
     left: 50%;
     top: 35%;
 }
