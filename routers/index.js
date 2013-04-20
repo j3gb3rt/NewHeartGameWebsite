@@ -107,6 +107,8 @@ function route(app, db_handler, next){
 		});
 	},redirect_page('/login')));
 	
+	app.get('/market', user_page(db_handler, simple_page_with_params('market'), simple_page_with_params('market')));
+
 	app.get('/avatars/:params(*+)', function(req, res){
 		res.setHeader('Content-Type', "image/png");
 		res.setHeader('Pragma', "no-cache");
