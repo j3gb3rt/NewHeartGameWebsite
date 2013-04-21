@@ -1,3 +1,4 @@
+var mysql = require("mysql");
 var db = require('./index.js');
 var pcrypto = require('./password_encryption.js');
 
@@ -66,5 +67,16 @@ user.save_avatar = function (email, url, callback){
 	});	
 };
 
+user.quest_score = function(email, quest_name, mode, callback){
+	db.query("select "+ mysql.escapeId(mode) + " as score from quest_status where email = ? and quest_name = ?", [email, quest_name], function(err, result){
+		callback(err, result);
+	});
+};
+
+user.save_quest_score = function(email, quest_name, mode, score, callback){
+	db.query("insert into quest_status (email, quest_name, " + mysql.escapeId(mode) + ") values (?, ?, ?) on duplicate key update " + mysql.escapeId(mode) + " = values(" + mysql.escapeId(mode) + ")", [email, quest_name, score], function(err, result){
+		callback(err, result);
+	});
+};
 
 module.exports.user = user;

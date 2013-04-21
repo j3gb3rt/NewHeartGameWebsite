@@ -13,6 +13,7 @@ block scripts
 		var question_data;
 		var question_history;
 		var skips;
+		var game_mode;
 		var running = false;
 		$(function(){
 			$("#choiceA").click(function(){answer_question(0)});
@@ -32,6 +33,7 @@ block scripts
 							$.getJSON('/resources/games/drinks/easy')
 							.done(function(data){
 								question_data = data;
+								game_mode = "easy";
 								start_game();
 							})
 							.fail(function(err){
@@ -63,8 +65,11 @@ block scripts
 			update_time();	
 		}
 
-		function generate_game_report(){
+		function generate_game_report(data){
 			var report = "Your score was " + score + ". The correct answer is in <span style='border: 1px solid green'>green</span>. Your choice is <span style='font-weight:900'>bolded</span>.";
+			if(typeof data !== 'undefined'){
+				report += "Your high score on " + game_mode + " is " + data.score + ".";
+			}
 			report += "<table>"
 			if(typeof question_history[0]["answered"] === 'undefined' && question_history.length == 1){
 				report += "<tr><td>You answered no questions.</td></tr>";
@@ -99,11 +104,8 @@ block scripts
 			return report;
 		}
 
-		function stop_game(){
-			running = false;
-			clearTimeout(timer);
-			$("#skip_label").text("START");
-			$("#dialog").html(generate_game_report());
+		function report_dialog(data){
+			$("#dialog").html(generate_game_report(data));
 			$("#dialog").dialog({
 					autoOpen: true,
 					close: function(event, ui){
@@ -117,6 +119,20 @@ block scripts
 					width: 800,
 					height: 400
 			});
+		}
+		function stop_game(){
+			running = false;
+			clearTimeout(timer);
+			$("#skip_label").text("START");
+			$.post('/api/games/drinks', {"score" : score, "mode" : game_mode})
+			.done(function(data){
+				if(data["status"] == "success"){
+					report_dialog(data);
+				} else {
+					report_dialog();					
+				}
+			})
+			.fail(function(){report_dialog();});
 		}
 
 

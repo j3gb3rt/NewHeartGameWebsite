@@ -158,6 +158,34 @@ function route(app, db_handler, next){
     	});
 	});
 
+	app.post('/api/games/:game([a-z]+)', function(req, res){
+		res.setHeader('Content-Type', "text/json");
+		var game_mode = req.body.mode + "_score";
+		var game = req.params.game;
+		var email = req.cookies.email;
+		var new_score = req.body.score;
+		if((game_mode === "easy_score" || game_mode === "medium_score" || game_mode === "hard_score") 
+				&& new_score % 1 === 0){
+			db_handler.user.quest_score(req.cookies.email, game, game_mode, function(err, results){
+				if(err){
+					res.send({"status" :"failure"});
+				} else if(results.length == 0 || new_score > results[0].score){
+					db_handler.user.save_quest_score(email, game, game_mode, new_score, function(err, result){
+						if(err){
+							res.send({"status" :"failure"});
+						} else{
+							res.send({"status" : "success", "score" : new_score});
+						}
+					});
+				} else {
+					res.send({"status" : "success", "score" : results[0].score});
+				}	
+			});
+		} else {
+			res.send({"status" :"failure"});
+		}
+	});
+
 	app.use(function(req, res, next){
 		res.status(404);
 		if (req.accepts('html')) {

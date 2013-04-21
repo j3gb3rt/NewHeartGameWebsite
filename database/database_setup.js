@@ -29,14 +29,14 @@ var tables = [
 				"url varchar(64) not null)"},
 			{"table_name" : "quests" ,
 			"schema" :
-				"(id int auto_increment, primary key(id))"},
+				"(name varchar(50) not null, primary key(name))"},
 			{"table_name" : "quest_status" ,
 			"schema" :
 				"(email varchar(50) not null, " + 
-				"quest_id int not null, " + 
-				"primary key (email, quest_id), " + 
+				"quest_name varchar(50) not null, " + 
+				"primary key (email, quest_name), " + 
 				"foreign key (email) references users (email) on delete cascade on update cascade, " + 
-				"foreign key (quest_id) references quests (id) on delete cascade on update cascade, " + 
+				"foreign key (quest_name) references quests (name) on delete cascade on update cascade, " + 
 				"easy_score int not null default '0', " +
 				"medium_score int not null default '0', " +
 				"hard_score int not null default '0')"}];
@@ -49,13 +49,25 @@ function failure(err){
 function create_table(connection, index){
 	if(index >= tables.length) {
 		console.log('database setup');
-		process.exit(0);
+		setup_tables(connection, 0);
+	} else {
+		connection.query('create table ' + tables[index]['table_name'] + tables[index]['schema'], function(err, result){
+			if(err){
+				failure(err);
+			} else {
+				create_table(connection, index + 1);
+			}
+		});
 	}
-	connection.query('create table ' + tables[index]['table_name'] + tables[index]['schema'], function(err, result){
+}
+
+function setup_tables(connection, index){
+	connection.query("insert into quests (name) values ('drinks')", function(err, result){
 		if(err){
 			failure(err);
 		} else {
-			create_table(connection, index + 1);
+			console.log('tables setup');
+			process.exit(0);
 		}
 	});
 }
