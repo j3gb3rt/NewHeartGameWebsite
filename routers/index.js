@@ -1,5 +1,6 @@
 var configuration = require('../config');
 var gm = require('gm');
+var fs = require('fs');
 
 function route(app, db_handler, next){
 
@@ -111,6 +112,14 @@ function route(app, db_handler, next){
 
 	app.get('/drinks', user_page(db_handler, simple_page_with_params('drinks'), simple_page_with_params('drinks')));
 
+	app.get('/resources/games/drinks/easy', function(req, res){
+		res.setHeader('Content-Type', "text/json");
+		fs.readFile(app.get('dir') + "/resources/drinks.json", 'utf8', function (err, data) {
+  			if(err)
+  				console.log(err);
+  			res.send(data);
+		});
+	});
 
 	app.get('/avatars/:params(*+)', function(req, res){
 		res.setHeader('Content-Type', "image/png");
