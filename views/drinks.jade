@@ -1,7 +1,7 @@
 extends layout
 
 block title
-	title Drinks Game
+	title Drink Nutrition Mini Game
 	
 block scripts
 	script
@@ -22,26 +22,21 @@ block scripts
 			if(!running){
 				$("#dialog").dialog({
 					autoOpen: true,
+					open: function(event, ui){
+						$(this).text("You will have 60 seconds to answer as many questions as possible to answer questions about Drink Nutrition. Read each answer and click on the picture of what you think is the correct answer.");
+					},
+					close: function(event, ui){
+						$(this).text("");
+					},
 					buttons: {
 						Easy: function() {
-							$.getJSON('/resources/games/drinks/easy', function(data){
+							$.getJSON('/resources/games/drinks/easy')
+							.done(function(data){
 								question_data = data;
 								start_game();
-								$(this).dialog("close");
-							});
-							$(this).dialog("close");
-						},
-						Easy: function() {
-							$.getJSON('/resources/games/drinks/easy', function(data){
-								question_data = data;
-								start_game();
-							});
-							$(this).dialog("close");
-						},
-						Easy: function() {
-							$.getJSON('/resources/games/drinks/easy', function(data){
-								question_data = data;
-								start_game();
+							})
+							.fail(function(err){
+								alert("Error, check your internet connection and refresh the page.");
 							});
 							$(this).dialog("close");
 						}
@@ -88,8 +83,14 @@ block scripts
 			}
 		}
 
-		function change_question(){
-			question = generate_question(question_data);
+		function change_question(){		
+			if(question_history.length < 1){
+				question = generate_question(question_data);
+			} else {
+				while(repeat_question(question, question_history)){			
+					question = generate_question(question_data);
+				}
+			}
 			$("#question").text(question["question"]);
 			var image_dir = "/assets/images/market/";
 			question_history[question_history.length] = question;
@@ -98,6 +99,21 @@ block scripts
 			$("#choiceA_label").text(question["a"]);
 			$("#choiceB_label").text(question["b"]);
 		}
+
+		function repeat_question(question, history){
+			for(var i = 0; i < history.length;i++){
+				if(same_question(question, history[history.length - 1]))
+					return true;
+			}
+			return false;
+		}
+
+		function same_question(current, last){
+			return current["question"] == last["question"] 
+				&& ((current["a"] == last["a"] && current["b"] == last["b"]) 
+					|| (current["a"] == last["b"] && current["b"] == last["a"]));
+		}
+
 		function number_of_options(obj){
 			var sum = 0;
 			for(var _ in obj){

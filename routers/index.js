@@ -45,17 +45,21 @@ function route(app, db_handler, next){
 		};
 	}
 
+	function user_only_page(db_handler, success){
+		return user_page(db_handler, success, redirect_page('/login'));
+	}
+
 	app.get('/', user_page(db_handler, simple_page_with_params('index'), simple_page_with_params('index')));
-	app.get('/map', user_page(db_handler, simple_page_with_params('map'), simple_page_with_params('map')));
-	app.get('/profile', user_page(db_handler, function (req, res, result){
+	app.get('/map', user_only_page(db_handler, simple_page_with_params('map')));
+	app.get('/profile', user_only_page(db_handler, function (req, res, result){
 		db_handler.user.has_avatar(result.username, function (err, avatar){
 			if(err || avatar){
 				res.render('profile', merge(result, avatar));
 			} else {
 				res.redirect('/avatar');
 			}
-		})}, 
-	redirect_page('/login')));
+		})
+	}));
 
 	app.get('/login', user_page(db_handler, redirect_page('/map'), simple_page('login')));
 	app.post('/login', function(req, res){
@@ -89,15 +93,15 @@ function route(app, db_handler, next){
 			} else {
 				db_handler.query('select session_token from users where username = ? or email = ?', 
 						[req.body.username, req.body.email], function(err, result){
-					db_handler.user.set_user_session(req, res, req.body.email, result[0].session_token, redirect_page('/map'));
+					db_handler.user.set_user_session(req, res, req.body.email, result[0].session_token, redirect_page('/avatar'));
 				});
 			}
 		});
 	});
 
-	app.get('/avatar', user_page(db_handler, function (req, res, result){
+	app.get('/avatar', user_only_page(db_handler, function (req, res, result){
 				res.render('avatar', merge(result, configuration.avatar));
-	},redirect_page('/login')));
+	}));
 	app.post('/avatar', user_page(db_handler, function (req, res, result){
 		db_handler.user.save_avatar(result.email, req.body.url, function(err){
 			if(err){
@@ -108,9 +112,9 @@ function route(app, db_handler, next){
 		});
 	},redirect_page('/login')));
 	
-	app.get('/market', user_page(db_handler, simple_page_with_params('market'), simple_page_with_params('market')));
+	app.get('/market', user_only_page(db_handler, simple_page_with_params('market')));
 
-	app.get('/drinks', user_page(db_handler, simple_page_with_params('drinks'), simple_page_with_params('drinks')));
+	app.get('/drinks', user_only_page(db_handler, simple_page_with_params('drinks')));
 
 	app.get('/resources/games/drinks/easy', function(req, res){
 		res.setHeader('Content-Type', "text/json");
