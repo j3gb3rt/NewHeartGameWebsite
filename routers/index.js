@@ -109,6 +109,9 @@ function route(app, db_handler, next){
 	
 	app.get('/market', user_page(db_handler, simple_page_with_params('market'), simple_page_with_params('market')));
 
+	app.get('/drinks', user_page(db_handler, simple_page_with_params('drinks'), simple_page_with_params('drinks')));
+
+
 	app.get('/avatars/:params(*+)', function(req, res){
 		res.setHeader('Content-Type', "image/png");
 		res.setHeader('Pragma', "no-cache");

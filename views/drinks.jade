@@ -1,1 +1,257 @@
 extends layout
+
+block title
+	title Drinks Game
+	
+block scripts
+	script
+		var timer;
+		var time;
+		var question;
+		var score;
+		var question_data;
+		var question_history;
+		var skips;
+		var running = false;
+		$(function(){
+			question_data = {
+				"questions" : 
+					{">" : 
+						{"Which drink contains more #?" : 
+							["Calories", "fat", "carbohydrates", "sugar", "sodium", "protien", "alcohol"]}, 
+					"true" : 
+						{"Which drink contains #?" : 
+							["Vitamin A", "Vitamin B3", "Vitamin C", "Vitamin B6", "Vitamin B12", "Calcium", "Iron"], 
+					"Which one may cause kidney stones?" : 
+						["kidney stones 1"], 
+					"Which one may help prevent kidney stones?" : 
+						["kidney stones 2"], 
+					"Which one may help prevent urinary tract infections?" : 
+						["urinary"], 
+					"If you’re taking medications, which one should you not drink?" : 
+						["medications"]}},
+				"answers" : {
+					"name" : 
+						["Soda","Diet Soda","Black Coffee","Vanilla Frappuccino","Mocha","Hot Chocolate",
+						"Cappuccino",
+						"Energy Drink","Diet Energy Drink","Apple Juice","Orange Juice","Grapefruit Juice","Cranberry Juice","Strawberry Smoothie","Whole Milk","Skim Milk","Chocolate Milk","Strawberry Milkshake","Wine","Beer","Light Beer","Sweet Tea","Iced Tea","Green Tea","Lemonade","Water","Enhanced Water","Sports Drink"], 
+					"Calories" : 
+						[100, 0, 2,168,165,185,60,107,7,114, 112,96,116,150,146,86,192, 373,200,102, 69,75,0,0, 99,0,53,50], 
+					"fat" : 
+						[0,0,0,2.5,7.5,8,2,0,0,0,0,0,0,1,8,0,6,17,0,0,0,0,0,0,0,0,0,0],
+					"carbohydrates" : 
+						[27,0,0,31,25,25,6,27,0,28,26,23,31,30,13,12,27,53,6,9,4,18,0,0,26,0,13,14], 
+					"sugar" : 
+						[27,0,0,26,18,225,27,0,24,2120,31,20,13,12,24,42,20,0,18,0,0,25,0,13,14], 
+					"sodium" : 
+						[30,30,5,84,0,0,0,93,93,10,2,2,5,0,98,98,110,167,10,9,9,5,5,5,10,2,0,100], 
+					"protien" : 
+						[0,0,0,5,6.5,7,4,0,0,0,2,1,1,8,8,8,9,7,0,1,1,1,0,0,0,0,0,0], 
+					"alcohol" : 
+						[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,4.8,4.8,0,0,0,0,0,0,0],
+					"Vitamin A" : 
+						[0,0,0,0,1,1,1,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,0], 
+					"Vitamin B3" : 
+						[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1], 
+					"Vitamin C" : 
+						[0,0,0,0,1,1,0,0,0,1,1,1,1,1,0,0,0,1,0,0,0,0,0,0,1,0,1,1], 
+					"Vitamin B6" : 
+						[0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1], 
+					"Vitamin B12" : 
+						[0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1], 
+					"Calcium" : 
+						[0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0], 
+					"Iron" : 
+						[0,0,0,0,1,1,0,0,0,1,1,1,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0], 
+					"urinary" : 
+						[0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], 
+					"kidney stones 1" : 
+						[1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0], 
+					"kidney stones 2" : 
+						[0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,0,1,0,0], 
+					"medications" : 
+						[0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0]}};
+			$("#choiceA").click(function(){answer_question(0)});
+			$("#choiceB").click(function(){answer_question(1)});
+			$("#skip").click(function(){use_skip()});
+		});
+
+		function use_skip(){
+			if(!running){
+				$("#dialog").dialog({
+					autoOpen: true,
+					buttons: {
+						Easy: function() {
+								start_game();
+								$(this).dialog("close");
+							},
+						Easy: function() {
+							start_game();
+							$(this).dialog("close");
+						},
+						Easy: function() {
+							start_game();
+							$(this).dialog("close");
+						}
+					},
+					width: "400px"
+				});
+			} else if(skips > 0 && running){
+				question_history[question_history.length - 1].answered = -1;
+				change_question();
+				skips--;
+				$("#skips").text("Skips Left: " + skips);
+			}
+		}
+		function start_game(){
+			skips = 3;
+			time = 60 + 1;
+			score = 0;
+			clearTimeout(timer);
+			question_history = new Array();
+			
+			change_question(question_data);
+			$("#skip_label").text("SKIP");
+			running = true;
+			update_time();	
+		}
+
+		function stop_game(){
+			running = false;
+			clearTimeout(timer);
+			$("#skip_label").text("START");
+		}
+
+
+		function answer_question(answer){
+			if(running){
+				question_history[question_history.length - 1].answered = answer;
+				if(question["answer"] == answer){
+					score += 10;
+				} else {
+					score -= 5;
+				}
+				$("#score").text("Score: " + score);
+				change_question(question_data);
+			}
+		}
+
+		function change_question(){
+			question = generate_question(question_data);
+			$("#question").text(question["question"]);
+			var image_dir = "/assets/images/market/";
+			question_history[question_history.length] = question;
+			$("#choiceA").attr("src", image_dir + question["a"] + ".png");
+			$("#choiceB").attr("src", image_dir + question["b"] + ".png");
+		}
+		function number_of_options(obj){
+			var sum = 0;
+			for(var _ in obj){
+				sum++;
+			}
+			return sum;
+		}
+		function property_by_index(obj, n){
+			var counter = 0;
+			for(var a in obj){
+				if(counter == n) return a;
+				counter++;
+			}
+			return null;
+		}
+		function random_property(obj){
+			if( Object.prototype.toString.call(obj) === '[object Array]' ) {
+				return obj[random_integer(obj.length)];
+			} else {
+				return property_by_index(obj, random_integer(number_of_options(obj)));
+			}
+		}
+		function random_index_where_not_in_list(arr, list, a){
+			var count = 0;
+			var index = -1;
+			for(var i = 0; i < arr.length; i++){
+				if(!in_list(arr[i], list)){
+					count++;
+					if(random_integer(count) == count - 1){
+						index = i;
+					}
+				}
+			}
+			return index;
+		}
+
+		function in_list(obj, arr){
+			for(var i = 0; i < arr.length; i++){
+				if(obj == arr[i])
+					return true;
+			}
+			return false;
+		}
+
+		function generate_question(data){
+			var question_type = random_property(data["questions"]);
+			var question_format = random_property(data["questions"][question_type]);
+			var question_category = random_property(data["questions"][question_type][question_format]);
+			var question = question_format.replace("#", question_category);
+			var category_choices = data["answers"][question_category]
+			if(question_type == ">"){
+				var answer_choice_a = random_index_where_not_in_list(category_choices, [0]);
+				var answer_choice_b = random_index_where_not_in_list(category_choices, [0, category_choices[answer_choice_a]]);
+				if(category_choices[answer_choice_a] > category_choices[answer_choice_b]){
+					var answer = 0;
+				} else {
+					var answer = 1;
+				}
+			} else if (question_type == "true"){
+				var answer_choice_a = random_index_where_not_in_list(category_choices, [], false);
+				var answer_choice_b = random_index_where_not_in_list(category_choices, [category_choices[answer_choice_a]], true);
+				if(category_choices[answer_choice_a] === 1){
+					var answer = 0;
+				} else if(category_choices[answer_choice_b] === 1){
+					var answer = 1;
+				} else {
+					var answer = category_choices[answer_choice_b];
+				}
+			}
+			return {"question" : question, 
+					"question_type" : question_type, 
+					"answer" : answer, 
+					"a" : data["answers"]["name"][answer_choice_a],
+					"b" : data["answers"]["name"][answer_choice_b]};
+		}
+		function random_integer(n){
+			return Math.floor(Math.random() * n);
+		}
+		function update_time(){
+			time--;
+			$("#time").text("Time: " + time);
+			if(time > 0){
+				timer = setTimeout('update_time()',1000);
+			} else {
+				stop_game();
+			}
+		}
+
+block content
+	h1 Drink Mini-Game
+	div(style='width:800px;margin-left:auto;margin-right:auto;height:500px;background:white;')
+		div(style='float:left;width:60%;height:100%;position:relative;text-align:center;')
+			img(src='/assets/images/market/refridgerator.png', width='100%', height='100%')
+			#question(style='position:absolute;top:5%;left:5%;width:70%;')
+				| Which one of these drinks contains more ?
+			#time(style='position:absolute;top:20%;left:5%;width:70%;')
+				| Time: 60
+			#score(style='position:absolute;top:35%;left:5%;width:70%;')
+				| Score: 0
+			#skips(style='position:absolute;top:60%;left:5%;width:70%;')
+				| Skips Left: 3
+			div(style='position:absolute;top:80%;left:50%;width:20%;')
+				p#skip_label(style="position:absolute;font-size:30px;font-weight:900;top:-25px;right:70px;")
+					| START
+				img#skip(src='/assets/images/market/skip.png', width='100%', height='100%', style='cursor:pointer;')
+		div(style='width:40%;float:right;height:100%;text-align:center')
+			div(style='position:relative; background:grey;margin-left:auto;margin-right:auto;margin-top:10%;width:80%;border-radius:20px;')
+				img#choiceA(src='', width='200px', height='200px', style='cursor:pointer')
+			div(style='position:relative; background:grey;margin-left:auto;margin-right:auto;margin-top:10%;width:80%;border-radius:20px;')
+				img#choiceB(src='', width='200px', height='200px', style='cursor:pointer')
+		#dialog
