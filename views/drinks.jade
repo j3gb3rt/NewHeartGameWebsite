@@ -95,6 +95,8 @@ block scripts
 			question_history[question_history.length] = question;
 			$("#choiceA").attr("src", image_dir + question["a"] + ".png");
 			$("#choiceB").attr("src", image_dir + question["b"] + ".png");
+			$("#choiceA_label").text(question["a"]);
+			$("#choiceB_label").text(question["b"]);
 		}
 		function number_of_options(obj){
 			var sum = 0;
@@ -200,10 +202,14 @@ block content
 			div(style='position:absolute;top:80%;left:50%;width:20%;')
 				p#skip_label(style="position:absolute;font-size:30px;font-weight:900;top:-25px;right:70px;")
 					| START
-				img#skip(src='/assets/images/market/skip.png', width='100%', height='100%', style='cursor:pointer;')
+				img#skip(src='/assets/images/market/skip.png', width='100%', height='65px', style='cursor:pointer;')
 		div(style='width:40%;float:right;height:100%;text-align:center')
-			div(style='position:relative; background:grey;margin-left:auto;margin-right:auto;margin-top:10%;width:80%;border-radius:20px;')
-				img#choiceA(src='', width='200px', height='200px', style='cursor:pointer')
-			div(style='position:relative; background:grey;margin-left:auto;margin-right:auto;margin-top:10%;width:80%;border-radius:20px;')
-				img#choiceB(src='', width='200px', height='200px', style='cursor:pointer')
+			div(style='position:relative; background:grey;margin-left:auto;margin-right:auto;margin-top:9%;width:80%;border-radius:20px;')
+				img#choiceA(src='', width='170px', height='170px', style='cursor:pointer')
+				p#choiceA_label
+					| &nbsp;
+			div(style='position:relative; background:grey;margin-left:auto;margin-right:auto;margin-top:9%;width:80%;border-radius:20px;')
+				img#choiceB(src='', width='170px', height='170px', style='cursor:pointer')
+				p#choiceB_label
+					| &nbsp;
 		#dialog
