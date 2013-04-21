@@ -5,6 +5,7 @@ block title
 	
 block scripts
 	script
+		var GAME_DURATION = 5;
 		var timer;
 		var time;
 		var question;
@@ -20,11 +21,9 @@ block scripts
 		});
 		function use_skip(){
 			if(!running){
+				$("#dialog").text("You will have 60 seconds to answer as many questions as possible to answer questions about Drink Nutrition. Read each answer and click on the picture of what you think is the correct answer.");
 				$("#dialog").dialog({
 					autoOpen: true,
-					open: function(event, ui){
-						$(this).text("You will have 60 seconds to answer as many questions as possible to answer questions about Drink Nutrition. Read each answer and click on the picture of what you think is the correct answer.");
-					},
 					close: function(event, ui){
 						$(this).text("");
 					},
@@ -41,7 +40,8 @@ block scripts
 							$(this).dialog("close");
 						}
 					},
-					width: "400px"
+					width: 400,
+					height:"auto"
 				});
 			} else if(skips > 0 && running){
 				question_history[question_history.length - 1].answered = -1;
@@ -52,7 +52,7 @@ block scripts
 		}
 		function start_game(){
 			skips = 3;
-			time = 60 + 1;
+			time = GAME_DURATION + 1;
 			score = 0;
 			clearTimeout(timer);
 			question_history = new Array();
@@ -63,10 +63,60 @@ block scripts
 			update_time();	
 		}
 
+		function generate_game_report(){
+			var report = "Your score was " + score + ". The correct answer is in <span style='border: 1px solid green'>green</span>. Your choice is <span style='font-weight:900'>bolded</span>.";
+			report += "<table>"
+			if(typeof question_history[0]["answered"] === 'undefined' && question_history.length == 1){
+				report += "<tr><td>You answered no questions.</td></tr>";
+			} else {
+				for(var i = 0; i < question_history.length; i++){
+					if(typeof question_history[i]["answered"] !== 'undefined'){
+						report += "<tr>";
+						report += "<td>" + question_history[i]["question"] + "</td>";
+						var style_a = "";
+						var style_b = "";
+						if(question_history[i]["answer"] == 0){
+							style_a += "border: 1px solid green;";
+							style_b += "border: 1px solid red;";
+						} else if(question_history[i]["answer"] == 1){
+							style_b += "border: 1px solid green;";
+							style_a += "border: 1px solid red;";
+						}
+						if(question_history[i]["answered"] == 0){
+							style_a += "font-weight:900;";
+							style_b += "font-weight:400;";
+						} else if(question_history[i]["answered"] == 1){
+							style_b += "font-weight:900;";
+							style_a += "font-weight:400;";
+						}
+						report += "<td><span style='" + style_a + "'>" + question_history[i]["a"] + "</span></td>";
+						report += "<td><span style='" + style_b + "'>" + question_history[i]["b"] + "</span></td>";
+						report += "</tr>";
+					}
+				}
+			}
+			report += "</table>"
+			return report;
+		}
+
 		function stop_game(){
 			running = false;
 			clearTimeout(timer);
 			$("#skip_label").text("START");
+			$("#dialog").html(generate_game_report());
+			$("#dialog").dialog({
+					autoOpen: true,
+					close: function(event, ui){
+						$(this).text("");
+					},
+					buttons: {
+						Okay: function() {
+							$(this).dialog("close");
+						}
+					},
+					width: 800,
+					height: 400
+			});
 		}
 
 
