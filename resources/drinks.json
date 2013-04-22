@@ -1,7 +1,7 @@
 {"questions" : 
 	{">" : 
 		{"Which drink contains more #?" : 
-			["Calories", "fat", "carbohydrates", "sugar", "sodium", "protien", "alcohol"]}, 
+			["Calories", "fat (g)", "carbohydrates (g)", "sugar (g)", "sodium (mg)", "protien (g)", "alcohol (%)", "caffeine (mg)"]}, 
 	"true" : 
 		{"Which drink contains #?" : 
 			["Vitamin A", "Vitamin B3", "Vitamin C", "Vitamin B6", "Vitamin B12", "Calcium", "Iron"], 
@@ -20,18 +20,20 @@
 		"Energy Drink","Diet Energy Drink","Apple Juice","Orange Juice","Grapefruit Juice","Cranberry Juice","Strawberry Smoothie","Whole Milk","Skim Milk","Chocolate Milk","Strawberry Milkshake","Wine","Beer","Light Beer","Sweet Tea","Iced Tea","Green Tea","Lemonade","Water","Enhanced Water","Sports Drink"], 
 	"Calories" : 
 		[100, 0, 2,168,165,185,60,107,7,114, 112,96,116,150,146,86,192, 373,200,102, 69,75,0,0, 99,0,53,50], 
-	"fat" : 
+	"fat (g)" : 
 		[0,0,0,2.5,7.5,8,2,0,0,0,0,0,0,1,8,0,6,17,0,0,0,0,0,0,0,0,0,0],
-	"carbohydrates" : 
+	"carbohydrates (g)" : 
 		[27,0,0,31,25,25,6,27,0,28,26,23,31,30,13,12,27,53,6,9,4,18,0,0,26,0,13,14], 
-	"sugar" : 
+	"sugar (g)" : 
 		[27,0,0,26,18,225,27,0,24,2120,31,20,13,12,24,42,20,0,18,0,0,25,0,13,14], 
-	"sodium" : 
+	"sodium (mg)" : 
 		[30,30,5,84,0,0,0,93,93,10,2,2,5,0,98,98,110,167,10,9,9,5,5,5,10,2,0,100], 
-	"protien" : 
+	"protien (g)" : 
 		[0,0,0,5,6.5,7,4,0,0,0,2,1,1,8,8,8,9,7,0,1,1,1,0,0,0,0,0,0], 
-	"alcohol" : 
+	"alcohol (%)" : 
 		[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,4.8,4.8,0,0,0,0,0,0,0],
+	"caffeine (mg)":
+		[22,30,120,80,88,13,75,78,78,0,0,0,0,0,0,0,0,0,0,0,0,25,25,25,0,0,28,0],
 	"Vitamin A" : 
 		[0,0,0,0,1,1,1,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,0], 
 	"Vitamin B3" : 
