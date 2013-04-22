@@ -120,7 +120,7 @@ label.stat.attribute {
 
 .ghostbox{
     position:absolute;
-    z-index:5;
+    
 }
 
 .ghostbox .hoverghost{
@@ -128,6 +128,7 @@ label.stat.attribute {
 }
 .ghostbox:hover .hoverghost{
     display:block;
+    z-index: 400;
 }
 
 /*NAVIGATION*/
