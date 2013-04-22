@@ -10,6 +10,10 @@ body{
     margin: 0px;
 }
 
+a, img {
+   border:none;
+}
+
 fieldset {
     border:0;
 }

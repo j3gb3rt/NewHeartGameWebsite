@@ -66,7 +66,7 @@ block scripts
 		}
 
 		function generate_game_report(data){
-			var report = "Your score was " + score + ". The correct answer is in <span style='border: 1px solid green'>green</span>. Your choice is <span style='font-weight:900'>bolded</span>. The numbers represent the grams of nutrient in the drink as related to the question.";
+			var report = "Your score was " + score + ". The correct answer is in <span style='border: 1px solid green'>green</span>. Your choice is <span style='font-weight:900'>bolded</span>. The numbers represent the amount of nutrient in the drink as related to the question.";
 			if(typeof data !== 'undefined'){
 				report += " Your high score on " + game_mode + " is " + data.score + ".";
 			}
