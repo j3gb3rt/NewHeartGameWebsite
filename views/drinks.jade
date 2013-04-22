@@ -22,7 +22,7 @@ block scripts
 		});
 		function use_skip(){
 			if(!running){
-				$("#dialog").text("You will have 60 seconds to answer as many questions as possible to answer questions about Drink Nutrition. Read each answer and click on the picture of what you think is the correct answer.");
+				$("#dialog").text("You will have 60 seconds to answer as many questions as possible about Drink Nutrition. Read each answer and click on the picture of what you think is the correct answer.");
 				$("#dialog").dialog({
 					autoOpen: true,
 					close: function(event, ui){
@@ -66,9 +66,9 @@ block scripts
 		}
 
 		function generate_game_report(data){
-			var report = "Your score was " + score + ". The correct answer is in <span style='border: 1px solid green'>green</span>. Your choice is <span style='font-weight:900'>bolded</span>.";
+			var report = "Your score was " + score + ". The correct answer is in <span style='border: 1px solid green'>green</span>. Your choice is <span style='font-weight:900'>bolded</span>. The numbers represent the grams of nutrient in the drink as related to the question.";
 			if(typeof data !== 'undefined'){
-				report += "Your high score on " + game_mode + " is " + data.score + ".";
+				report += " Your high score on " + game_mode + " is " + data.score + ".";
 			}
 			report += "<table>"
 			if(typeof question_history[0]["answered"] === 'undefined' && question_history.length == 1){
