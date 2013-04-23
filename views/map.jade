@@ -5,8 +5,7 @@ block title
 	
 block content
 	h1 Map
-	#map.box(style = 'z-index:1;position:relative;')
-		img(src='/assets/images/map/map.png',type='image/png',usemap='#map1', width='848px', height='656px',style = 'z-index:5;position:relative;')		
+	#map.box(style = 'z-index:1; position:relative;')				
 		.ghostbox(style='left:320px;top:70px;width:370px;height:310px;z-index:400;position:absolute;')
 			a(href='/city')
 				img.hoverghost(src='/assets/images/map/heart.png',width='100%',height='100%')
@@ -22,4 +21,3 @@ block content
 		.ghostbox(style='left:190px;top:250px;width:140px;height:110px;z-index:400;position:absolute;')
 			a(href='/house')
 				img.hoverghost(src='/assets/images/map/heart.png',width='100%',height='100%')
-		
