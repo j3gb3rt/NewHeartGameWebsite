@@ -10,7 +10,7 @@ function generate_user_salt(){
 }
 
 function encrypt_password(password, salt){
-	return crypto.createHash('sha256').update(password + salt + configuration.db_salt).digest('base64');
+	return crypto.createHmac('sha256', configuration.db_salt).update(password + salt).digest('base64');
 }
 
 function verify_password(password, salt, hash){

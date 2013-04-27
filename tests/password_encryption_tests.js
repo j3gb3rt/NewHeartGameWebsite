@@ -33,9 +33,9 @@ describe('#encrypt_password', function(){
 
 describe('#verify_password', function(){
 	it('should return true when password is correct', function () {
-		assert.ok(pcrypto.verify_password("apples", "OxjR0w1/yo17eNKC", "syxA3+g5vap68pJL4O4gRAbfmrc2+hNpIqZoEPc5neM="));
+		assert.ok(pcrypto.verify_password("apples", "OxjR0w1/yo17eNKC", "z0bcob1TH3qwAP/3SlVxhvo5BqNROHf+Are6FPWeZ4w="));
 	});
-	it('should return false when password is correct', function () {
-		assert.ok(!pcrypto.verify_password("apple", "OxjR0w1/yo17eNKC", "syxA3+g5vap68pJL4O4gRAbfmrc2+hNpIqZoEPc5neM="));
+	it('should return false when password is incorrect', function () {
+		assert.ok(!pcrypto.verify_password("apple", "OxjR0w1/yo17eNKC", "z0bcob1TH3qwAP/3SlVxhvo5BqNROHf+Are6FPWeZ4w="));
 	});
 });
